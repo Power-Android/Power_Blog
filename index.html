@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"powerofandroid.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Power">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="https://powerofandroid.com/child/index.html">
 <meta property="og:site_name" content="Power">
-<meta property="og:locale">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Power">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="https://powerofandroid.com/child/">
 
 
 <script id="page-configurations">
@@ -37,7 +38,7 @@
     sidebar: "",
     isHome : true,
     isPost : false,
-    lang   : 'default'
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -81,7 +82,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -100,6 +101,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -111,19 +113,56 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -133,6 +172,10 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/Power-Android" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main class="main">
@@ -145,11 +188,11 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/18/hello-world/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2020/12/17/%E9%B8%BF%E8%92%99-HarmonyOS%E2%80%9401.%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.png">
       <meta itemprop="name" content="Power">
       <meta itemprop="description" content="">
     </span>
@@ -160,7 +203,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/12/18/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2020/12/17/%E9%B8%BF%E8%92%99-HarmonyOS%E2%80%9401.%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">鸿蒙-HarmonyOS—01.入门介绍及环境搭建</a>
         </h2>
 
         <div class="post-meta">
@@ -168,12 +211,63 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2020-12-18 11:42:42" itemprop="dateCreated datePublished" datetime="2020-12-18T11:42:42+08:00">2020-12-18</time>
+              <time title="创建时间：2020-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-17T00:00:00+08:00">2020-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:16:39" itemprop="dateModified" datetime="2020-12-18T13:16:39+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%B8%BF%E8%92%99-HarmonyOS/" itemprop="url" rel="index"><span itemprop="name">鸿蒙-HarmonyOS</span></a>
+                </span>
             </span>
 
           
+            <span id="/2020/12/17/%E9%B8%BF%E8%92%99-HarmonyOS%E2%80%9401.%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="post-meta-item leancloud_visitors" data-flag-title="鸿蒙-HarmonyOS—01.入门介绍及环境搭建" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/12/17/%E9%B8%BF%E8%92%99-HarmonyOS%E2%80%9401.%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/17/%E9%B8%BF%E8%92%99-HarmonyOS%E2%80%9401.%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -184,16 +278,867 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>2020年12月16日，华为正式发布了HarmonyOS2.0手机开发者Beta版本。华为部分机型已经开放更新至鸿蒙系统，So，是时候来一波视觉及使用体验了！接下来我会用系列文章来详细介绍和使用HarmonyOS系统，尽量用通俗易懂的语言和视觉两方面来阐述我的所学所用，真正的能给大家带来一些帮助，是我写作的初衷。</p>
+<p>今天的开篇章我们主要介绍一些基础的配置流程，它们包含：</p>
+<ol>
+<li><strong>HarmontOS概述</strong></li>
+<li><strong>开发工具DevEco Studio介绍及下载</strong></li>
+<li><strong>搭建开发环境的流程,创建我们的第一个Project</strong></li>
+<li><strong>工程目录介绍</strong></li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/17/%E9%B8%BF%E8%92%99-HarmonyOS%E2%80%9401.%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2019/10/25/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9ARoom/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Power">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Power">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/25/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9ARoom/" class="post-title-link" itemprop="url">Android架构组件（四）：Room</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-25T00:00:00+08:00">2019-10-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:17:01" itemprop="dateModified" datetime="2020-12-18T13:17:01+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/10/25/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9ARoom/" class="post-meta-item leancloud_visitors" data-flag-title="Android架构组件（四）：Room" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/25/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9ARoom/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/25/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9ARoom/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>上篇我们分析了对于Android架构体系最终要的Viewmodel组件，它可以实现数据和view之间的管理，并且能提供组件间的通讯（注意fragment获取viewmodel时传入的对象要一致）。<br>那么，接下来我们就学习一下和Livedata完美兼容的数据库——<strong>Room</strong></p>
+<p><strong>Room</strong>是Google推出的Android架构组件库中的<strong>数据持久化组件库</strong>, 也可以说是在SQLite上实现的一套ORM解决方案。<br><strong>Room</strong>数据存储库<strong>支持返回Livedata对象</strong>的可观察查询，当数据库更新时，Room 会生成更新 LiveData 对象所需的所有代码。在需要时，生成的代码会在后台线程上异步运行查询。此模式有助于使界面中显示的数据与存储在数据库中的数据保持同步。</p>
+<h4 id="Room是什么？"><a href="#Room是什么？" class="headerlink" title="Room是什么？"></a>Room是什么？</h4><p>Room主要包含四个步骤：</p>
+<ul>
+<li><p><strong>Entity</strong>：表示持有数据库行的类（即数据表结构）。对于每个实体，将会创建一个数据库表来持有他们。你必须通过Database类的entities数组来引用实体类。实体类的中的每个字段除了添加有 <strong>@Ignore注解</strong>外的，都会存放到数据库中。</p>
+</li>
+<li><p><strong>Dao</strong>：表示作为数据访问对象（DAO）的类或接口。DAO是Room的主要组件，负责定义访问数据库的方法。由 <strong>@Database注解</strong>标注的类必须包含一个无参数且返回使用 <strong>@Dao注解</strong>的类的抽象方法。当在编译生成代码时，Room创建该类的实现。</p>
+</li>
+<li><p><strong>Database</strong> ：用来创建一个数据库持有者。注解定义一系列实体，类的内容定义一系列DAO。它也是底层连接的主入口点。</p>
+</li>
+<li><p><strong>Room</strong> ：数据库的创建者 &amp; 负责数据库版本更新的具体实现者</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/25/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9ARoom/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2019/10/24/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AViewModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Power">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Power">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/24/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AViewModel/" class="post-title-link" itemprop="url">Android架构组件（三）：Viewmodel</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-24 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-24T00:00:00+08:00">2019-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:16:53" itemprop="dateModified" datetime="2020-12-18T13:16:53+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/10/24/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AViewModel/" class="post-meta-item leancloud_visitors" data-flag-title="Android架构组件（三）：Viewmodel" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/24/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AViewModel/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/24/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AViewModel/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>上篇我们分析了Livedata的使用及原理，相信我们已经学会了使用Livedata来存储数据，并在观察者组件中实现回调方法，来动态更新UI数据。这里奉上（双膝已经跪烂了…）上两篇的地址：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c13e240c9989">Android架构组件（二）：LiveData</a><br>方便大家进行查阅和回顾。</p>
+<p>那么，接下来我们要学习我们的第三个架构组件——<strong>Viewmodel</strong>，我们从字面上理解，它肯定和view，model有关联，它是负责准备和管理UI组件（activity/fragment）相关的数据类，也就是说<strong>Viewmodel</strong>是用来<strong>管理UI相关数据</strong>的，同时<strong>Viewmodel</strong>还可以负责UI间<strong>组件的通讯</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/24/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AViewModel/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2019/10/22/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ALiveData/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Power">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Power">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/22/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ALiveData/" class="post-title-link" itemprop="url">Android架构组件（二）：LiveData</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-22 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-22T00:00:00+08:00">2019-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:16:47" itemprop="dateModified" datetime="2020-12-18T13:16:47+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/10/22/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ALiveData/" class="post-meta-item leancloud_visitors" data-flag-title="Android架构组件（二）：LiveData" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/22/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ALiveData/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/22/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ALiveData/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>上篇文章我们分析了Lifecycle的使用和原理，相信我们已经学会了用<strong>Lifecycle</strong>将你所需的类添加声明周期管理，如果只是寥寥阅读也没关系，这里奉上（双膝跪地）上篇地址，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a>，方便大家进行回顾。</p>
+<p>那么接下来我们就要学习第二个架构组件——<strong>LiveData</strong>，它是一个可观察的数据处理类，通过观察者模式，感知与其共生的其它组件的生命周期（例如：Activity，Fragment等），进而确保Livedata仅更新处于活跃状态下组件的观察者。</p>
+<p>接下来我将和大家一起了解和使用这些组件。<br>系列文章也会收录到<a href="https://powerofandroid.com/">我的博客（Power）</a>里，方便大家查阅。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/22/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ALiveData/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2019/10/18/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ALifecycle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Power">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Power">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/18/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ALifecycle/" class="post-title-link" itemprop="url">Android架构组件（一）：Lifecycle</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-18 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-18T00:00:00+08:00">2019-10-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:17:06" itemprop="dateModified" datetime="2020-12-18T13:17:06+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/10/18/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ALifecycle/" class="post-meta-item leancloud_visitors" data-flag-title="Android架构组件（一）：Lifecycle" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/18/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ALifecycle/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/18/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ALifecycle/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>谷歌在17年发布了Android架构组件1.0稳定版，用来帮助开发者们简化开发流程，并为App的开发架构提供指南。这次发布的架构包含了声明周期管理，数据持久性等提供了一系列库，并且该架构相互之间完美的融合到了一起，有助于我们使用更少的样板代码写出模块化的App。<br>他们包含：</p>
+<ol>
+<li><strong>Lifecycle</strong>（生命周期管理）</li>
+<li><strong>LiviData</strong>（基于观察者模式的可感知生命周期的数据持有类）</li>
+<li><strong>Viewmodel</strong>（将view和model分开的组件）</li>
+<li><strong>Room</strong>（简单强大的数据存储组件）</li>
+</ol>
+<p>接下来我会用一系列文章和大家一起了解和使用这些组件。<br>系列文章也会收录到<a href="https://powerofandroid.com/">我的博客（Power）</a>里，方便大家查阅。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/18/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ALifecycle/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2019/08/14/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E8%AF%A6%E8%A7%A3%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Power">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Power">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/14/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E8%AF%A6%E8%A7%A3%E7%AF%87/" class="post-title-link" itemprop="url">Kotlin学习（二）：控制语句详解篇</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-14 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-14T00:00:00+08:00">2019-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:17:21" itemprop="dateModified" datetime="2020-12-18T13:17:21+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/08/14/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E8%AF%A6%E8%A7%A3%E7%AF%87/" class="post-meta-item leancloud_visitors" data-flag-title="Kotlin学习（二）：控制语句详解篇" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/08/14/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E8%AF%A6%E8%A7%A3%E7%AF%87/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/14/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E8%AF%A6%E8%A7%A3%E7%AF%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>通过上一篇的学习，我们对kotlin已经掌握了函数的定义，基本数据类型，null安全设计，类型检测及自动转换和Kotlin的区间表达式，如果您还有任何不明白的地方，请跳转至我的上一篇博客：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/090535b596c1">《Kotlin学习（一）：我TM谢谢你！(基础语法篇)》</a><br>对于kotlin，这只是最基础的入门讲解，也希望大家能够跟我一样逐渐适应kotlin的美，我们一起进步，我相信通过一段时间的学习，我也可以像大家分享一些kotlin的语法糖以及更深入的使用。<a href="https://powerofandroid.com/">我的博客（Power）</a></p>
+<h4 id="kotlin控制语句详解"><a href="#kotlin控制语句详解" class="headerlink" title="kotlin控制语句详解"></a>kotlin控制语句详解</h4><ul>
+<li>条件控制语句：if 语句、when 语句</li>
+<li>循环控制语句：for 循环、while与do…while 循环</li>
+<li>返回和跳转语句：return、 break、 continue</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/14/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E8%AF%A6%E8%A7%A3%E7%AF%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2019/07/30/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%88%91TM%E8%B0%A2%E8%B0%A2%E4%BD%A0%EF%BC%81(%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Power">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Power">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/30/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%88%91TM%E8%B0%A2%E8%B0%A2%E4%BD%A0%EF%BC%81(%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87)/" class="post-title-link" itemprop="url">Kotlin学习（一）：我TM谢谢你！(基础语法篇)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-30 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-30T00:00:00+08:00">2019-07-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 13:17:27" itemprop="dateModified" datetime="2020-12-18T13:17:27+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/07/30/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%88%91TM%E8%B0%A2%E8%B0%A2%E4%BD%A0%EF%BC%81(%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87)/" class="post-meta-item leancloud_visitors" data-flag-title="Kotlin学习（一）：我TM谢谢你！(基础语法篇)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/07/30/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%88%91TM%E8%B0%A2%E8%B0%A2%E4%BD%A0%EF%BC%81(%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/07/30/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%88%91TM%E8%B0%A2%E8%B0%A2%E4%BD%A0%EF%BC%81(%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>自从2017年Google定义Kotlin为Android开发的官方语言，瞬间掀起了学习大潮，各种学习博客如雨后春笋般攻击我这颗弱小而又无助的小心脏！是你们，是的，就是因为你们使我变得越来越强大，我TM替我日益稀疏的头发谢谢各位学霸！！！所以，搞起来吧！开启我们从乌黑亮丽到寸草不生的kotlin学习之旅！<br><a href="https://powerofandroid.com/">我的博客（Power）</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/30/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%88%91TM%E8%B0%A2%E8%B0%A2%E4%BD%A0%EF%BC%81(%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://powerofandroid.com/child/2019/01/08/Android%E4%B8%89%E7%A7%8D%E5%8A%A8%E7%94%BB%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Power">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Power">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/08/Android%E4%B8%89%E7%A7%8D%E5%8A%A8%E7%94%BB%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Android三种动画详解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-08T00:00:00+08:00">2019-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 16:48:56" itemprop="dateModified" datetime="2020-12-18T16:48:56+08:00">2020-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/01/08/Android%E4%B8%89%E7%A7%8D%E5%8A%A8%E7%94%BB%E8%AF%A6%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="Android三种动画详解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/01/08/Android%E4%B8%89%E7%A7%8D%E5%8A%A8%E7%94%BB%E8%AF%A6%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/01/08/Android%E4%B8%89%E7%A7%8D%E5%8A%A8%E7%94%BB%E8%AF%A6%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>自尊，自律，自强，自爱。–Power</p>
+<p>一直以来自己对Android的动画一知半解，所以决定写这篇文章来详细系统的学习Android的三种动画，即 </p>
+<ul>
+<li>View Animation（视图动画）</li>
+<li>Drawable Animation（帧动画）</li>
+<li>Property Animation（属性动画）</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/08/Android%E4%B8%89%E7%A7%8D%E5%8A%A8%E7%94%BB%E8%AF%A6%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -252,10 +1197,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
@@ -266,6 +1211,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Power"
+      src="/images/avatar.png">
   <p class="site-author-name" itemprop="name">Power</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -274,14 +1221,52 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Power-Android" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Power-Android" rel="noopener" target="_blank"><i class="fab fa-chrome fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://juejin.cn/user/3438928103998173" title="掘金 → https:&#x2F;&#x2F;juejin.cn&#x2F;user&#x2F;3438928103998173" rel="noopener" target="_blank"><i class="fab fa-chrome fa-fw"></i>掘金</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/c38bb8315892" title="简书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;c38bb8315892" rel="noopener" target="_blank"><i class="fab fa-chrome fa-fw"></i>简书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Power_Qyh" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Power_Qyh" rel="noopener" target="_blank"><i class="fab fa-chrome fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/power-90-12" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;power-90-12" rel="noopener" target="_blank"><i class="fab fa-chrome fa-fw"></i>知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/6166245127/profile?topnav=1&wvr=6" title="微博 → https:&#x2F;&#x2F;weibo.com&#x2F;6166245127&#x2F;profile?topnav&#x3D;1&amp;wvr&#x3D;6" rel="noopener" target="_blank"><i class="fab fa-chrome fa-fw"></i>微博</a>
+      </span>
+  </div>
 
 
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.wanandroid.com/index" title="https:&#x2F;&#x2F;www.wanandroid.com&#x2F;index" rel="noopener" target="_blank">WanAndroid</a>
+        </li>
+    </ul>
+  </div>
 
       </div>
 
@@ -307,8 +1292,20 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Power</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">56k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">50 分钟</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -318,6 +1315,92 @@
 
 
 
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"tN1hHBbq4eM3fmsqVfMlv6AL-gzGzoHsz","app_key":"lag3Js0qsCD0HU882R03EtXE","server_url":null,"security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
 
 
       </div>
@@ -326,6 +1409,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -339,28 +1424,63 @@
 
 <script src="/js/next-boot.js"></script>
 
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
+<script src="/js/bookmark.js"></script>
 
 
 
 
   
 
+
+
+
   
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tN1hHBbq4eM3fmsqVfMlv6AL-gzGzoHsz',
+      appKey     : 'lag3Js0qsCD0HU882R03EtXE',
+      placeholder: "留下你的评论",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

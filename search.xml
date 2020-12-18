@@ -1,0 +1,949 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Android三种动画详解</title>
+    <url>/2019/01/08/Android%E4%B8%89%E7%A7%8D%E5%8A%A8%E7%94%BB%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>自尊，自律，自强，自爱。–Power</p>
+<p>一直以来自己对Android的动画一知半解，所以决定写这篇文章来详细系统的学习Android的三种动画，即 </p>
+<ul>
+<li>View Animation（视图动画）</li>
+<li>Drawable Animation（帧动画）</li>
+<li>Property Animation（属性动画）</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><h3 id="1-View-Animation（视图动画）"><a href="#1-View-Animation（视图动画）" class="headerlink" title="1.View Animation（视图动画）"></a>1.View Animation（视图动画）</h3><p>1.1 View动画的概述及种类<br>视图动画的作用对象是View，支持四种动画效果，分别是平移动画，缩放动画，旋转动画，透明度动画。譬如，我们可以对TextView设置其文本的移动，旋转，缩放，透明。</p>
+<p>视图动画可以通过XML或通过代码动态创建，对于视图动画建议使用XML文件定义，因为它具有更高的可读性，可重用性。</p>
+<p>下面我们来分别看一下View动画的四种效果：</p>
+<ul>
+<li><p>平移动画（TranslateAnimation）</p>
+  <img src="http://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/translate_anim.gif" width="160" div align="center" />
+</li>
+<li><p>缩放动画（ScaleAnimation）</p>
+  <img src="http://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/scale_anim.gif" width="160" div align="center" />
+</li>
+<li><p>旋转动画（RotateAnimation）</p>
+  <img src="http://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/rotate_anim.gif" width="160" div align="center" />
+</li>
+<li><p>透明度动画（AlphaAnimation）</p>
+  <img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/alhpa_anim.gif" width="160" div align="center" />
+
+</li>
+</ul>
+<p>view动画的四种变换我们通过效果图已基本了解，下面我们通过表格系统的了解一下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">标签</th>
+<th align="center">子类</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">平移动画</td>
+<td align="center">&lt; translate &gt;</td>
+<td align="center">TranslateAnimation</td>
+<td align="center">移动View</td>
+</tr>
+<tr>
+<td align="center">缩放动画</td>
+<td align="center">&lt; scale &gt;</td>
+<td align="center">ScaleAnimation</td>
+<td align="center">方法或缩小View</td>
+</tr>
+<tr>
+<td align="center">旋转动画</td>
+<td align="center">&lt; rotate &gt;</td>
+<td align="center">RotateAnimation</td>
+<td align="center">旋转view</td>
+</tr>
+<tr>
+<td align="center">透明度动画</td>
+<td align="center">&lt; alpha &gt;</td>
+<td align="center">AlphaAnimation</td>
+<td align="center">改变View的透明度</td>
+</tr>
+</tbody></table>
+<p>要使用View动画，首先要创建XML文件，我们需要在res下新建anim文件夹，接着在anim下创建animation resource file的xml文件，我们举例为view_anim.xml</p>
+<p>我们通过xml文件来了解它们各自的语法：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span></span><br><span class="line">&lt;set</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</span><br><span class="line">    <span class="comment">&lt;!--平移动画标签--&gt;</span></span><br><span class="line">    &lt;translate</span><br><span class="line">        android:fromXDelta=&quot;0%p&quot;</span><br><span class="line">        android:toXDelta=&quot;20%p&quot;</span><br><span class="line">        android:fromYDelta=&quot;0%p&quot;</span><br><span class="line">        android:toYDelta=&quot;20%p&quot;</span><br><span class="line">        android:duration=&quot;4000&quot;/&gt;</span><br><span class="line">    <span class="comment">&lt;!--缩放动画标签--&gt;</span></span><br><span class="line">    &lt;scale</span><br><span class="line">        android:fromXScale=&quot;1.0&quot;</span><br><span class="line">        android:toXScale=&quot;0.2&quot;</span><br><span class="line">        android:fromYScale=&quot;1.0&quot;</span><br><span class="line">        android:toYScale=&quot;0.2&quot;</span><br><span class="line">        android:pivotX=&quot;50%&quot;</span><br><span class="line">        android:pivotY=&quot;50%&quot;</span><br><span class="line">        android:duration=&quot;4000&quot;/&gt;</span><br><span class="line">    <span class="comment">&lt;!--旋转动画标签--&gt;</span></span><br><span class="line">    &lt;rotate</span><br><span class="line">        android:fromDegrees=&quot;0&quot;</span><br><span class="line">        android:toDegrees=&quot;360&quot;</span><br><span class="line">        android:pivotX=&quot;50%&quot;</span><br><span class="line">        android:pivotY=&quot;50%&quot;</span><br><span class="line">        android:duration=&quot;4000&quot;/&gt;</span><br><span class="line">    <span class="comment">&lt;!--透明度动画标签--&gt;</span></span><br><span class="line">    &lt;alpha</span><br><span class="line">        android:fromAlpha=&quot;1.0&quot;</span><br><span class="line">        android:toAlpha=&quot;0.2&quot;</span><br><span class="line">        android:duration=&quot;4000&quot;/&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>从上面的代码我们知道，View动画既可以是单个动画，也可以有一系列动画组成。<br>这是因为View动画的四种种类分别对应着Animation的四个子类（TranslateAnimation，ScaleAnimation，RotateAnimation，AlphaAnimation），除了以上四个子类它还有一个AnimationSet类，对应xml标签为<code>&lt;set&gt;</code>，它是一个容器，可以包含若干个动画，并且内部也可以继续嵌套<code>&lt;set&gt;</code>集合的。<br>我们在activity对TextView设置动画：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> power</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018-08-08 20:28:58</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: MainActivity</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView textView;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        textView = findViewById(R.id.textview);</span><br><span class="line">        textView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                Animation animation = AnimationUtils.loadAnimation(MainActivity.<span class="keyword">this</span>,R.anim.viewanimation);</span><br><span class="line">                textView.startAnimation(animation);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们来看下动画集合的运行效果：<br><img src="http://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/set_anim.gif" width="160" div align="center" /></p>
+<p>1.2 View动画的属性详解</p>
+<ul>
+<li>Animation属性详解：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">xml属性</th>
+<th align="center">java方法</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">android:duration</td>
+<td align="center">setDuration(long)</td>
+<td align="center">动画持续时间，毫秒为单位</td>
+</tr>
+<tr>
+<td align="center">android:ShareInterpolator</td>
+<td align="center">setInterpolator(Interpolator)</td>
+<td align="center">设定插值器（指定的动画效果，譬如回弹等）</td>
+</tr>
+<tr>
+<td align="center">android:fillAfter</td>
+<td align="center">setFillAfter(boolean)</td>
+<td align="center">控件动画结束时是否保持动画最后的状态</td>
+</tr>
+<tr>
+<td align="center">android:fillBefore</td>
+<td align="center">setFillBefore(boolean)</td>
+<td align="center">控件动画结束时是否还原到开始动画前的状态</td>
+</tr>
+<tr>
+<td align="center">android:repeatMode</td>
+<td align="center">setRepeatMode(int)</td>
+<td align="center">重复类型有两个值，reverse表示倒序回放，restart表示从头播放</td>
+</tr>
+<tr>
+<td align="center">android:startOffset</td>
+<td align="center">setStartOffset(long)<span class="Apple-tab-span" style="white-space:pre"></span></td>
+<td align="center">调用start函数之后等待开始运行的时间，单位为毫秒</td>
+</tr>
+</tbody></table>
+<ul>
+<li>TranslateAnimation属性详解：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">xml属性</th>
+<th align="center">java方法</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">android:fromXDelta</td>
+<td align="center">TranslateAnimation(float fromXDelta, …)</td>
+<td align="center">起始点X轴坐标，数值，百分比，百分比p，<em>注①</em></td>
+</tr>
+<tr>
+<td align="center">android:fromYDelta</td>
+<td align="center">TranslateAnimation(…, float fromYDelta, …)</td>
+<td align="center">起始点Y轴从标，同上规律</td>
+</tr>
+<tr>
+<td align="center">android:toXDelta</td>
+<td align="center">TranslateAnimation(…, float toXDelta, …)</td>
+<td align="center">结束点X轴坐标，同上规律</td>
+</tr>
+<tr>
+<td align="center">android:toYDelta</td>
+<td align="center">TranslateAnimation(…, float toYDelta)</td>
+<td align="center">结束点Y轴坐标，同上规律</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注①：</strong> 数值、百分数、百分数p，譬如50表示以当前View左上角坐标加50px为初始点、50%表示以当前View的左上角加上当前View宽高的50%做为初始点、50%p表示以当前View的左上角加上父控件宽高的50%做为初始点</p>
+</blockquote>
+<ul>
+<li>ScaleAnimation属性详解：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">xml属性</th>
+<th align="center">java方法</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">android:fromXScale</td>
+<td align="center">ScaleAnimation(float fromX, …)</td>
+<td align="center">初始X轴缩放比例，1.0表示无变化</td>
+</tr>
+<tr>
+<td align="center">android:toXScale</td>
+<td align="center">ScaleAnimation(…, float toX, …)</td>
+<td align="center">结束X轴缩放比例</td>
+</tr>
+<tr>
+<td align="center">android:fromYScale</td>
+<td align="center">ScaleAnimation(…, float fromY, …)</td>
+<td align="center">初始Y轴缩放比例</td>
+</tr>
+<tr>
+<td align="center">android:toYScale</td>
+<td align="center">ScaleAnimation(…, float toY, …)</td>
+<td align="center">结束Y轴缩放比例</td>
+</tr>
+<tr>
+<td align="center">android:pivotX</td>
+<td align="center">ScaleAnimation(…, float pivotX, …)</td>
+<td align="center">缩放起点X轴坐标，数值，百分比，百分比p，<em>注①</em></td>
+</tr>
+<tr>
+<td align="center">android:pivotY</td>
+<td align="center">ScaleAnimation(…, float pivotY)</td>
+<td align="center">缩放起点Y轴坐标，同上规律</td>
+</tr>
+</tbody></table>
+<ul>
+<li>RotateAnimation属性详解：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">xml属性</th>
+<th align="center">Java方法</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">android:fromDegrees</td>
+<td align="center">RotateAnimation(float fromDegrees, …)</td>
+<td align="center">旋转开始角度，正代表顺时针度数，负代表逆时针度数</td>
+</tr>
+<tr>
+<td align="center">android:toDegrees</td>
+<td align="center">RotateAnimation(…, float toDegrees, …)</td>
+<td align="center">旋转结束角度，正代表顺时针度数，负代表逆时针度数</td>
+</tr>
+<tr>
+<td align="center">android:pivotX</td>
+<td align="center">RotateAnimation(…, float pivotX, …)</td>
+<td align="center">缩放起点X坐标，数值，百分比，百分比p，<strong>注①</strong></td>
+</tr>
+<tr>
+<td align="center">android:pivotY</td>
+<td align="center">RotateAnimation(…, float pivotY)</td>
+<td align="center">缩放起点Y坐标，同上规律</td>
+</tr>
+</tbody></table>
+<ul>
+<li>AlphaAnimation属性详解：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">xml属性</th>
+<th align="center">java方法</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">android:fromAlpha</td>
+<td align="center">AlphaAnimation(float fromAlpha, …)</td>
+<td align="center">动画开始的透明度（0.0到1.0，0.0是全透明，1.0是不透明）</td>
+</tr>
+<tr>
+<td align="center">android:toAlpha</td>
+<td align="center">AlphaAnimation(…, float toAlpha)</td>
+<td align="center">动画结束的透明度，同上</td>
+</tr>
+</tbody></table>
+<ul>
+<li>AnimationSet属性详解：<br>  AnimationSet继承自Animation，是上面四种的组合容器管理类，没有自己特有的属性，他的属性继承自Animation，所以特别注意，**<em>当我们对set标签使用Animation的属性时会对该标签下的所有子控件都产生影响。**</em>譬如我们在set标签下加入duration=“1000”，子控件的duration属性会失效。</li>
+</ul>
+<p>1.3 View动画的使用方法及注意事项</p>
+<ul>
+<li>上述的使用方法已经非常详细了，也并没有什么难以理解的地方，我们只需要创建相应的xml文件，然后在activity里startAnimation就可以完成动画了。当然了，Animation类和View操作Animation还有一些如下的实用方法：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">Animation类的方法</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">reset()</td>
+<td align="center">重置Animation的初始化</td>
+</tr>
+<tr>
+<td align="center">cancel()</td>
+<td align="center">取消Animation动画</td>
+</tr>
+<tr>
+<td align="center">start()</td>
+<td align="center">开始Animation动画</td>
+</tr>
+<tr>
+<td align="center">setAnimationListener()</td>
+<td align="center">给当前Animation设置动画监听</td>
+</tr>
+<tr>
+<td align="center">hasStarted()</td>
+<td align="center">判断当前Animation是否开始</td>
+</tr>
+<tr>
+<td align="center">hasEnded()</td>
+<td align="center">判断当前Animation是否结束</td>
+</tr>
+<tr>
+<td align="center">—————————-</td>
+<td align="center">—————————-</td>
+</tr>
+<tr>
+<td align="center"><strong>View类对Animation的操作方法</strong></td>
+<td align="center"><strong>解释</strong></td>
+</tr>
+<tr>
+<td align="center">startAnimation(Animation animation)<span class="Apple-tab-span" style="white-space:pre"></span></td>
+<td align="center">对当前View开始设置的Animation动画</td>
+</tr>
+<tr>
+<td align="center">clearAnimation()</td>
+<td align="center">取消当View在执行的Animation动画</td>
+</tr>
+</tbody></table>
+<ul>
+<li>注意事项<ul>
+<li><strong><em>特别特别注意：补间动画执行之后并未改变View的真实布局属性值。切记这一点，譬如我们在Activity中有一个 Button在屏幕上方，我们设置了平移动画移动到屏幕下方然后保持动画最后执行状态呆在屏幕下方，这时如果点击屏幕下方动画执行之后的Button是没 有任何反应的，而点击原来屏幕上方没有Button的地方却响应的是点击Button的事件。</em></strong></li>
+<li><strong><em>在进行动画的时候，尽量使用dp，因为px会导致适配问题。</em></strong></li>
+</ul>
+</li>
+</ul>
+<p>1.4 View动画Interpolator插值器详解</p>
+<ul>
+<li>插值器简介<br>  首先，我们先看一下源码的解释：<br>  <img src="http://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/interpolator.jpg" alt="interpolato"><br>注释说明：插值器定义了动画的变化，使一些基础的动画如（平移，缩放，旋转，透明）可以被加速，减速，重复等<br>通过上图可以看见其实系统提供给我们的各类型插值器都是实现了Interpolator接口，具体如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">java类</th>
+<th align="center">xml</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">AccelerateDecelerateInterpolator</td>
+<td align="center">@android:anim/accelerate_decelerate_interpolator</td>
+<td align="center">动画始末速率较慢，中间加速</td>
+</tr>
+<tr>
+<td align="center">AccelerateInterpolator</td>
+<td align="center">@android:anim/accelerate_interpolator</td>
+<td align="center">动画开始速率较慢，之后慢慢加速</td>
+</tr>
+<tr>
+<td align="center">AnticipateInterpolator</td>
+<td align="center">@android:anim/anticipate_interpolator</td>
+<td align="center">开始的时候从后向前甩</td>
+</tr>
+<tr>
+<td align="center">AnticipateOvershootInterpolator</td>
+<td align="center">@android:anim/anticipate_overshoot_interpolator</td>
+<td align="center">类似上面AnticipateInterpolator</td>
+</tr>
+<tr>
+<td align="center">BounceInterpolator</td>
+<td align="center">@android:anim/bounce_interpolator</td>
+<td align="center">动画结束时弹起</td>
+</tr>
+<tr>
+<td align="center">CycleInterpolator</td>
+<td align="center">@android:anim/cycle_interpolator</td>
+<td align="center">循环播放速率改变为正弦曲线</td>
+</tr>
+<tr>
+<td align="center">DecelerateInterpolator</td>
+<td align="center">@android:anim/decelerate_interpolator</td>
+<td align="center">动画开始快然后慢</td>
+</tr>
+<tr>
+<td align="center">LinearInterpolator</td>
+<td align="center">@android:anim/linear_interpolator</td>
+<td align="center">动画匀速改变</td>
+</tr>
+<tr>
+<td align="center">OvershootInterpolator</td>
+<td align="center">@android:anim/overshoot_interpolator</td>
+<td align="center">向前弹出一定值之后回到原来位置</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>插值器的使用<br>  插值器的使用比较简答，如下：</p>
+  <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">&lt;set</span><br><span class="line">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line"><span class="comment">&lt;!--运动结束时弹起--&gt;</span></span><br><span class="line">android:interpolator=&quot;@android:anim/bounce_interpolator&quot;&gt;</span><br><span class="line"><span class="comment">&lt;!--平移动画标签--&gt;</span></span><br><span class="line">&lt;translate</span><br><span class="line">    android:fromXDelta=&quot;0%p&quot;</span><br><span class="line">    android:toXDelta=&quot;20%p&quot;</span><br><span class="line">    android:fromYDelta=&quot;0%p&quot;</span><br><span class="line">    android:toYDelta=&quot;20%p&quot;</span><br><span class="line">    android:duration=&quot;4000&quot;/&gt;</span><br><span class="line"><span class="comment">&lt;!--缩放动画标签--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  我们看一下设置插值器后的效果：</p>
+  <img src="http://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/interpolator.gif" width="160" div align="center" />
+</li>
+<li><p>插值器的自定义<br>  当系统提供给我们的插值器不能满足开发需求时，就需要我们自定义，而插值器的自定义有两种方式，一种xml实现，一种java实现。</p>
+<ul>
+<li><p>xml实现方式<br>在anim文件下创建xml文件</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span></span><br><span class="line">&lt;accelerateInterpolator</span><br><span class="line">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">android:factor=&quot;0.8&quot;&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">accelerateInterpolator</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过代码我们发现，这种方式只能修改现有插值器的一些属性，但有些插值器不具备修改属性，那么我们就通过java代码实现进一步需求</p>
+</li>
+<li><p>java代码实现方式<br>通过上面的学习我们知道，所有的插值器都是继承自Interpolator接口，它则继承TimeInterpolator接口，而这个接口定义了float getInterpolation(float input);方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccelerateDecelerateInterpolator</span> <span class="keyword">extends</span> <span class="title">BaseInterpolator</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">NativeInterpolatorFactory</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> input)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">float</span>)(Math.cos((input + <span class="number">1</span>) * Math.PI) / <span class="number">2.0f</span>) + <span class="number">0.5f</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TimeInterpolator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Maps a value representing the elapsed fraction of an animation to a value that represents</span></span><br><span class="line"><span class="comment"> * the interpolated fraction. This interpolated value is then multiplied by the change in</span></span><br><span class="line"><span class="comment"> * value of an animation to derive the animated value at the current elapsed animation time.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> input A value between 0 and 1.0 indicating our current point</span></span><br><span class="line"><span class="comment"> *        in the animation where 0 represents the start and 1.0 represents</span></span><br><span class="line"><span class="comment"> *        the end</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> The interpolation value. This value can be more than 1.0 for</span></span><br><span class="line"><span class="comment"> *         interpolators which overshoot their targets, or less than 0 for</span></span><br><span class="line"><span class="comment"> *         interpolators that undershoot their targets.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> input)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们需要继承Interpolator接口并实现getInterpolation();，在方法里处理业务逻辑即可。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Drawable-Animation（帧动画）"><a href="#2-Drawable-Animation（帧动画）" class="headerlink" title="2.Drawable Animation（帧动画）"></a>2.Drawable Animation（帧动画）</h3><p>2.1帧动画概述<br>帧动画是顺序播放一组预先定义好的图片，不同于View动画，系统提供了另外一个类AnimationDrawable来使用帧动画。</p>
+<p>2.2帧动画的使用<br>首先我们找一组帧动画的图片放入drawable-xhdpi文件夹下，其次在drawable文件夹下创建xml文件，如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span></span><br><span class="line">&lt;animation-list</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:oneshot=&quot;false&quot;&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">&quot;@drawable/refresh1&quot;</span> <span class="attr">android:duration</span>=<span class="string">&quot;180&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">&quot;@drawable/refresh2&quot;</span> <span class="attr">android:duration</span>=<span class="string">&quot;180&quot;</span>/&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">&quot;@drawable/refresh25&quot;</span> <span class="attr">android:duration</span>=<span class="string">&quot;180&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">animation-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">view = findViewById(R.id.view);</span><br><span class="line">        view.setBackgroundResource(R.drawable.drawable_anim);</span><br><span class="line">        view.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                AnimationDrawable animationDrawable = (AnimationDrawable) view.getBackground();</span><br><span class="line">                animationDrawable.start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<p>通过上述代码，帧动画已经完成了，我们来看下效果图：<br><img src="http://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/drawable_anim.gif" width="160" div align="center" /></p>
+<p><code>&lt;animation-list&gt;</code> 必须是根节点，包含一个或者多个<code>&lt;item&gt;</code>元素，属性有：<br><code>android:oneshot true</code>代表只执行一次，false循环执行。<br><code>&lt;item&gt;</code> 类似一帧的动画资源。</p>
+<p><code>&lt;item&gt;</code> animation-list的子项，包含属性如下：<br><code>android:drawable</code> 一个frame的Drawable资源。<br><code>android:duration</code> 一个frame显示多长时间。</p>
+<p><strong><em>帧动画很简单，但容易引起OOM，我在这里也就不多赘述。</em></strong></p>
+<h3 id="3-Property-Animation（属性动画）"><a href="#3-Property-Animation（属性动画）" class="headerlink" title="3.Property Animation（属性动画）"></a>3.Property Animation（属性动画）</h3><p>3.1 未完待续…</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>动画(Animation)</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android架构组件（一）：Lifecycle</title>
+    <url>/2019/10/18/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ALifecycle/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>谷歌在17年发布了Android架构组件1.0稳定版，用来帮助开发者们简化开发流程，并为App的开发架构提供指南。这次发布的架构包含了声明周期管理，数据持久性等提供了一系列库，并且该架构相互之间完美的融合到了一起，有助于我们使用更少的样板代码写出模块化的App。<br>他们包含：</p>
+<ol>
+<li><strong>Lifecycle</strong>（生命周期管理）</li>
+<li><strong>LiviData</strong>（基于观察者模式的可感知生命周期的数据持有类）</li>
+<li><strong>Viewmodel</strong>（将view和model分开的组件）</li>
+<li><strong>Room</strong>（简单强大的数据存储组件）</li>
+</ol>
+<p>接下来我会用一系列文章和大家一起了解和使用这些组件。<br>系列文章也会收录到<a href="https://powerofandroid.com/">我的博客（Power）</a>里，方便大家查阅。</p>
+<a id="more"></a>
+
+<p>好了，首先我们先来学习下基础组件：<strong>Lifecycle</strong></p>
+<h4 id="什么是Lifecycle？"><a href="#什么是Lifecycle？" class="headerlink" title="什么是Lifecycle？"></a>什么是Lifecycle？</h4><p>在讲解之前，我们先来分析下没用该组件之前我们常用的MVP模式中，Presenter是如何绑定activity/Fragment的生命周期？</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//presenter</span></span><br><span class="line">Public <span class="class"><span class="keyword">class</span> <span class="title">Presenter</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attachView</span><span class="params">(T view)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">detachView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//activity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Activity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Presenter presenter;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(...)</span> </span>&#123;</span><br><span class="line">        presenter= <span class="keyword">new</span> Presenter();</span><br><span class="line">        presenter.attachView(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">        presenter.detachView();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相信大多数开发者对上述代码很清楚了，我们常把activity和prsenter的绑定和分离都写在了base基类里用于同步两者的生命周期。上述的代码并没有什么逻辑错误，不过接下来的Lifecycle会让生命周期管理变得更加丝滑~</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * presenter继承LifecycleObserver</span></span><br><span class="line"><span class="comment"> * 1.通过注解的方式实现Lifecycle的观察者方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Public <span class="class"><span class="keyword">class</span> <span class="title">Presenter</span> <span class="keyword">extends</span> <span class="title">LifecycleObserver</span></span>&#123;</span><br><span class="line">    <span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_ANY)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onAny</span><span class="params">(LifecycleOwner owner, Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 在activity里添加Observer</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Activity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Presenter presenter;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(...)</span> </span>&#123;</span><br><span class="line">        presenter= <span class="keyword">new</span> Presenter();</span><br><span class="line">        <span class="comment">//2.添加LifecycleObserver实现同步</span></span><br><span class="line">        getLifecycle().addObserver(presenter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过上述代码我们了解到，presenter通过继承LifecycleObserver实现生命周期方法，并在activity/Fragment中addObserver()中传入presenter对象就可以绑定两者的生命周期了。而且Lifecycle提供了所有的生命周期事件，选择你所需要的生命周期并通过注解进行声明就可以了。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_ANY)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onAny</span><span class="params">(LifecycleOwner owner, Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_START)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_STOP)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_RESUME)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么，Lifecycle的工作原理是什么？我们继续分析。</p>
+<h4 id="Lifecycle的工作原理"><a href="#Lifecycle的工作原理" class="headerlink" title="Lifecycle的工作原理"></a>Lifecycle的工作原理</h4><p>我们先祭出一张整体架构图：<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/lifecycle%E5%8E%9F%E7%90%86%E5%9B%BE.png" alt="lifecycle原理图"></p>
+<p>我们来看下大致的工作原理：</p>
+<ul>
+<li><p><strong>Lifecycle（生命周期）</strong>：该抽象类提供了addOberserver，removeObser，getCurrentState抽象方法，生命周期的事件和状态的枚举类。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Lifecycle</span> </span>&#123;</span><br><span class="line">    <span class="meta">@MainThread</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addObserver</span><span class="params">(<span class="meta">@NonNull</span> LifecycleObserver observer)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@MainThread</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(<span class="meta">@NonNull</span> LifecycleObserver observer)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@MainThread</span></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> State <span class="title">getCurrentState</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;WeakerAccess&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Event</span> </span>&#123;</span><br><span class="line">        ON_CREATE,</span><br><span class="line">        ON_START,</span><br><span class="line">        ON_RESUME,</span><br><span class="line">        ON_PAUSE,</span><br><span class="line">        ON_STOP,</span><br><span class="line">        ON_DESTROY,</span><br><span class="line">        ON_ANY</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;WeakerAccess&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">        DESTROYED,</span><br><span class="line">        INITIALIZED,</span><br><span class="line">        CREATED,</span><br><span class="line">        STARTED,</span><br><span class="line">        RESUMED;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAtLeast</span><span class="params">(<span class="meta">@NonNull</span> State state)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> compareTo(state) &gt;= <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>LifecycleObserver接口（Lifecycle观察者）</strong>：实现该接口的类，通过注解的方式，可以通过被LifecycleOwner类的addObserver(LifecycleObserver o)方法注册,被注册后，LifecycleObserver便可以观察到LifecycleOwner的生命周期事件。</p>
+</li>
+<li><p><strong>LifecycleOwner接口（Lifecycle持有者）</strong>：实现该接口的类持有生命周期(Lifecycle对象)，该接口的生命周期(Lifecycle对象)的改变会被其注册的观察者LifecycleObserver观察到并触发其对应的事件。<br>该接口提供了getLifecycle()方法返回Lifecycle对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&#123;&quot;WeakerAccess&quot;, &quot;unused&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">LifecycleOwner</span> </span>&#123;</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function">Lifecycle <span class="title">getLifecycle</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>activity继承的AppCompatActivity父类v4包里的FragmentActivity已经实现了该接口，<br>v4包里的fragment同理也替我们实现了LifecycleObserver接口。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AppCompatActivity继承自FragmentActivity继承自SupportActivity，该类里的getLifecycle()方法返回了lifecycle对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentActivity</span> <span class="keyword">extends</span> <span class="title">SupportActivity</span> <span class="keyword">implements</span> <span class="title">ViewModelStoreOwner</span>, <span class="title">OnRequestPermissionsResultCallback</span>, <span class="title">RequestPermissionsRequestCodeValidator</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Lifecycle <span class="title">getLifecycle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getLifecycle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SupportActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">LifecycleOwner</span>, <span class="title">Component</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">private</span> LifecycleRegistry mLifecycleRegistry = <span class="keyword">new</span> LifecycleRegistry(<span class="keyword">this</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Lifecycle <span class="title">getLifecycle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.mLifecycleRegistry;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//fragment同理，就不贴代码了，大家可以去源码里查看。</span></span><br></pre></td></tr></table></figure>
+<p>从上述的代码我们不难发现，<strong>实现的getLifecycle()方法，实际上返回的是 LifecycleRegistry对象，LifecycleRegistry对象实际上继承了Lifecycle</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifecycleRegistry</span> <span class="keyword">extends</span> <span class="title">Lifecycle</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么持有Lifecycle对象有什么作用呢？实际上Fragment已经给出了答案。在fragment的生命周期方法中LifecycleRegistry都会发送对应的生命周期事件给内部的handleLifecycleEvent()方法；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment</span> <span class="keyword">implements</span> <span class="title">xxx</span>, <span class="title">LifecycleOwner</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">performCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        onCreate(savedInstanceState);  <span class="comment">//1.先执行生命周期方法</span></span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="comment">//2.生命周期事件分发</span></span><br><span class="line">                                   mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">performStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        onStart();</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">performResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         onResume();</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">performPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//3.注意，调用顺序变了</span></span><br><span class="line">        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        onPause();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">performStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        onStop();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">performDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>fragment把事件发送出去后，都做了什么事情？接下来我们来看下LifecycleRegistry内部的实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifecycleRegistry</span> <span class="keyword">extends</span> <span class="title">Lifecycle</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLifecycleEvent</span><span class="params">(<span class="meta">@NonNull</span> Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line">        State next = getStateAfter(event);</span><br><span class="line">        moveToState(next);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">moveToState</span><span class="params">(State next)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        sync();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sync</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">//通过里边的backwardPass()和forwardPass()方法循环遍历</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">forwardPass</span><span class="params">(LifecycleOwner lifecycleOwner)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">while</span> (...) &#123;</span><br><span class="line">            ...</span><br><span class="line">            ObserverWithState observer = entry.getValue();</span><br><span class="line">            <span class="keyword">while</span> (...) &#123;</span><br><span class="line">                <span class="comment">//通知状态变化</span></span><br><span class="line">                pushParentState(observer.mState);</span><br><span class="line">                observer.dispatchEvent(lifecycleOwner,    upEvent(observer.mState));</span><br><span class="line">                popParentState();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过代码我们了解到<strong>handleLifecycleEvent</strong>里通过getStateAfter()方法获取当前的状态，并且通过<strong>moveToState()</strong> 方法修改Lifecycle的状态值，紧接着遍历所有LifecycleObserver 并同步且通知其状态发生变化，因此就能触发已经实现LifecycleObserver接口的类中对应的生命周期事件。</p>
+</li>
+</ul>
+<p>现在是时候祭出  <strong>Lifecycle时序图</strong>  来更好的理解工作原理<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/lifecycle%E6%97%B6%E5%BA%8F%E5%9B%BE.png" alt="Lifecycle时序图"></p>
+<p><strong><em>以上就是Lifecycle的基本工作原理，为缩短文章篇幅和可读性，文章里涉及的代码是源码的精简版，如若原理不详细，请移步源码阅读。</em></strong><br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/lifecycle%E6%BA%90%E7%A0%81%E7%9B%AE%E5%BD%95.png" alt="lifecycle目录结构"></p>
+<h4 id="参考-amp-感谢"><a href="#参考-amp-感谢" class="headerlink" title="参考&amp;感谢"></a>参考&amp;感谢</h4><p><a href="https://juejin.im/post/5c53beaf51882562e27e5ad9#heading-1">Android官方架构组件Lifecycle:生命周期组件详解&amp;原理分析</a></p>
+<p><a href="https://www.wanandroid.com/">玩Android</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>我们通过文章已经基本了解了lifecycle的工作原理，并且利用lifecycle可以更好对一些事件进行生命周期的管理。其实lifecycle原生支持livedata（顾名思义，动态数据容器），所以我们下一篇的重点就是学习和分析livedata的用法和构造。<br>这几年在开发过程中一直使用MVP架构，并且项目结构变大以后非常多的接口类出现了，导致项目中很臃肿。也在不少博客中看到MMVM的架构的应用，但是对于许多架构了解不深刻，导致代码阅读很吃力，才有了系统学习Android架构的想法，并且计划学习完Android架构系列以后，试着搭建自己的MVVM框架，并逐渐延伸到组件化开发，从而做到真正的学以致用。</p>
+<h4 id="Android架构组件系列文章"><a href="#Android架构组件系列文章" class="headerlink" title="Android架构组件系列文章"></a>Android架构组件系列文章</h4><p><a href="https://powerofandroid.com/">我的博客（Power）</a><br><a href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a><br><a href="https://www.jianshu.com/p/c13e240c9989">Android架构组件（二）：LiveData</a><br><a href="https://www.jianshu.com/p/be3f7b4b9974">Android架构组件（三）：Viewmodel</a><br><a href="https://www.jianshu.com/p/cf05150335df">Android架构组件（四）：Room</a></p>
+<p><strong>感谢您的阅读和支持！</strong></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>android架构组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android架构组件（三）：Viewmodel</title>
+    <url>/2019/10/24/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AViewModel/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>上篇我们分析了Livedata的使用及原理，相信我们已经学会了使用Livedata来存储数据，并在观察者组件中实现回调方法，来动态更新UI数据。这里奉上（双膝已经跪烂了…）上两篇的地址：<br><a href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a><br><a href="https://www.jianshu.com/p/c13e240c9989">Android架构组件（二）：LiveData</a><br>方便大家进行查阅和回顾。</p>
+<p>那么，接下来我们要学习我们的第三个架构组件——<strong>Viewmodel</strong>，我们从字面上理解，它肯定和view，model有关联，它是负责准备和管理UI组件（activity/fragment）相关的数据类，也就是说<strong>Viewmodel</strong>是用来<strong>管理UI相关数据</strong>的，同时<strong>Viewmodel</strong>还可以负责UI间<strong>组件的通讯</strong>。</p>
+<a id="more"></a>
+
+<h4 id="Viewmodel是什么？"><a href="#Viewmodel是什么？" class="headerlink" title="Viewmodel是什么？"></a>Viewmodel是什么？</h4><p>我们已经知道，<strong>Viewmodel</strong>有以下两点作用：</p>
+<ol>
+<li>用来管理数据（model）和UI组件（view）的数据类</li>
+<li>负责UI组件之间的通讯</li>
+</ol>
+<ul>
+<li><p><strong><em>管理数据（model）和UI组件（view）的数据</em></strong><br>我们先来看一下它的基本使用：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="comment">//如果不熟悉Livedata用法可以阅读上一篇博客</span></span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;List&lt;User&gt;&gt; users;</span><br><span class="line">    <span class="keyword">public</span> LiveData&lt;List&lt;User&gt;&gt; getUsers() &#123;</span><br><span class="line">        <span class="keyword">if</span> (users == <span class="keyword">null</span>) &#123;</span><br><span class="line">            users = <span class="keyword">new</span> MutableLiveData&lt;List&lt;Users&gt;&gt;();</span><br><span class="line">            loadUsers();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> users;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 异步调用获取用户列表</span></span><br><span class="line">        ...</span><br><span class="line">        users.setValue(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        MyViewModel model = ViewModelProviders.of(<span class="keyword">this</span>).get(MyViewModel.class);</span><br><span class="line">        model.getUsers().observe(<span class="keyword">this</span>, users -&gt; &#123;</span><br><span class="line">            <span class="comment">// 更新 UI</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用法很简单,<br>我们在<strong>viewmodel</strong>中定义一个livedata的集合，通过网络获取数据后，调用setValue方法通知观察者(UI)在活跃状态下时更新数据。<br>在activity中，我们<strong>初始化viewmodel</strong>拿到livedata并在他的onchanged()方法里做UI相关操作。<br>这里我们发现viewmodel做了一个中间人的角色，它管理着model与view之间相互关联的数据，这样我们就可以把数据相关（model）操作放到viewmodel中，把UI操作放到view中，完全由viewmodel管理，使model与view层完全解耦。</p>
+</li>
+<li><p><strong><em>负责UI间组件之间的通讯</em></strong><br>一个activity中的多个Fragment互相间通讯时很常见的需求，我们可以使用activity中的viewmodel来实现fragment之间数据的共享。<br>下面这个例子也很简单：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我们定义viewmodel并设置set，get方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommunicateViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;String&gt; mNameLiveData;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> LiveData&lt;String&gt; <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mNameLiveData == <span class="keyword">null</span>) &#123;</span><br><span class="line">            mNameLiveData = <span class="keyword">new</span> MutableLiveData&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mNameLiveData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mNameLiveData != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mNameLiveData.setValue(name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//我们通过fragment1设置name的值</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentOne</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> CommunicateViewModel mCommunicateViewModel;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(<span class="meta">@Nullable</span> Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        mCommunicateViewModel = ViewModelProviders.of(getActivity()).get(CommunicateViewModel.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnClick(R.id.btn_set_name)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onViewClicked</span><span class="params">(View v)</span></span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (v.getId())&#123;</span><br><span class="line">            <span class="keyword">case</span> R.id.btn_set_name:</span><br><span class="line">                mCommunicateViewModel.setName(<span class="string">&quot;Jane&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在fragment2中我们通过同一个viewmodel拿到livedata并更新UI</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentTwo</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> CommunicateViewModel mCommunicateViewModel;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(<span class="meta">@Nullable</span> Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        mCommunicateViewModel = ViewModelProviders.of(getActivity()).get(CommunicateViewModel.class);</span><br><span class="line">        mCommunicateViewModel.getName().observe(<span class="keyword">this</span>, name -&gt; mTvName.setText(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码我们知道了，两个fragment的是通过<strong>同一个viewmodel</strong>进行组件之间的通讯，这里值得注意的是两个fragment中初始化<strong>viewmodel</strong>时传入的都是<strong>getActivity()</strong> 这也就意味着他们传入的是同一个对象，如果不同，那么得到的将是两个viewmodel对象，也不会收到通知进行更新了。</p>
+</li>
+</ul>
+<p>这种组件间通讯的好处在于</p>
+<ul>
+<li><em>activity不需要做任何事情</em></li>
+<li><em>fragment不需要知道彼此，而是通过viewmodel进行联系</em></li>
+</ul>
+<h4 id="Viewmodel分析"><a href="#Viewmodel分析" class="headerlink" title="Viewmodel分析"></a>Viewmodel分析</h4><p>我们先来看下它的声明周期图：<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/viewmodel%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="viewmodel生命周期"><br>从上图我们分析得出，左侧表示Activity的生命周期状态，右侧绿色部分表示ViewModel的生命周期范围。当屏幕旋转的时候，Activity会被recreate，Activity会经过几个生命周期方法，但是这个时候ViewModel还是之前的对象，并没有被重新创建，只有当Activity的finish()方法被调用时，ViewModel.onCleared()方法会被调用，对象才会被销毁。这张图很好的描述了当Activity被recreate时，ViewModel的生命周期。</p>
+<p>另外，有个注意的地方：<strong>在ViewModel中不要持有Activity的引用</strong>。为什么要注意这一点呢？从上面的图我们看到，当Activity被recreate时，ViewModel对象并没有被销毁，<strong>如果Model持有Activity的引用时就可能会导致内存泄漏</strong>。那如果你要使用到Context对象怎么办呢，ViewModel的子类AndroidViewModel为我们很好的解决了这一问题，我们稍后会分析。</p>
+<p>我们再来看一下<strong>viewmodel</strong>的类图：<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/viewmodel%E7%B1%BB%E5%9B%BE.png" alt="viewmodel类图"><br>根据这张类图，我们来分析一下：</p>
+<ul>
+<li><strong>ViewModelProviders</strong>是ViewModel工具类，该类提供了通过Fragment和Activity得到ViewModel的方法，而具体实现又是由ViewModelProvider实现的。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@NonNull</span></span><br><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(<span class="meta">@NonNull</span> FragmentActivity activity,<span class="meta">@Nullable</span> Factory factory)</span> </span>&#123;</span><br><span class="line">    Application application = checkApplication(activity);</span><br><span class="line">    <span class="keyword">if</span> (factory == <span class="keyword">null</span>) &#123;</span><br><span class="line">        factory = ViewModelProvider.AndroidViewModelFactory.getInstance(application);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//param1是ViewModelStore，param2是工厂类</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(ViewModelStores.of(activity), factory);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//他在of()方法里初始化了ViewModelProvider里的工厂类AndroidViewModelFactory，并renturn了ViewModelProvider对象</span></span><br><span class="line"><span class="comment">//内部还有一些check方法用于检查Fragment是否Attached to Activity，Activity的Application对象是否为空等</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>ViewModelStores</strong>是ViewModelStore的工厂方法类，它会关联Fragment，activity<br>上个代码片段我们看见它在of()方法里renturn时new了一个provider对象并通过ViewModelStores.of()得到stroe对象<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//ViewModelStores.of(activity)方法返回了ViewModelStore对象</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(ViewModelStores.of(activity), factory);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelStore <span class="title">of</span><span class="params">(<span class="meta">@NonNull</span> FragmentActivity activity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (activity <span class="keyword">instanceof</span> ViewModelStoreOwner) &#123;</span><br><span class="line">        <span class="keyword">return</span> ((ViewModelStoreOwner) activity).getViewModelStore();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//我们看见这里有一个holderFragmentFor对象（HolderFragment）</span></span><br><span class="line">    <span class="keyword">return</span> holderFragmentFor(activity).getViewModelStore();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HolderFragment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//将这个方法设置为true就可以使当前Fragment在Activity重建时存活下来,如果不设置或者设置为false,当前Fragment会在Activity重建时同样发生重建,以至于被新建的对象所替代。</span></span><br><span class="line">    setRetainInstance(<span class="keyword">true</span>);</span><br><span class="line">    <span class="comment">//这样就解决了旋转屏幕时因为重建导致数据丢失的问题</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在HoldFragment中初始化了ViewModelStore用于在销毁时clear，释放掉viewmodel</span></span><br><span class="line"><span class="keyword">private</span> ViewModelStore mViewModelStore = <span class="keyword">new</span> ViewModelStore();</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">        mViewModelStore.clear();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ViewModelStore <span class="title">getViewModelStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mViewModelStore;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>ViewModelStore</strong>是存储ViewModel的类，具体实现是通过HashMap来保存ViewModle对象。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//viewmodelStroe用户存储Viewmodel，并提供set，get方法和clear方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewModelStore</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, ViewModel&gt; mMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(String key, ViewModel viewModel)</span> </span>&#123;</span><br><span class="line">        ViewModel oldViewModel = mMap.put(key, viewModel);</span><br><span class="line">        <span class="keyword">if</span> (oldViewModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">            oldViewModel.onCleared();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">final</span> ViewModel <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mMap.get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (ViewModel vm : mMap.values()) &#123;</span><br><span class="line">            <span class="comment">//这里调用了viewmodel的onCleared()方法</span></span><br><span class="line">            vm.onCleared();</span><br><span class="line">        &#125;</span><br><span class="line">        mMap.clear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>ViewModelProvider</strong>是实现ViewModel创建、获取的工具类。在ViewModelProvider中定义了一个创建ViewModel的接口类——Factory。ViewModelProvider中有个ViewModelStore对象，用于存储ViewModel对象。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//构造方法中我们传入了stroe和工厂类</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ViewModelProvider</span><span class="params">(<span class="meta">@NonNull</span> ViewModelStore store, <span class="meta">@NonNull</span> Factory factory)</span> </span>&#123;</span><br><span class="line">    mFactory = factory;</span><br><span class="line">    <span class="keyword">this</span>.mViewModelStore = store;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//我们使用的.get(modele.class)方法最终会调用这个get方法</span></span><br><span class="line"><span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">get</span><span class="params">(<span class="meta">@NonNull</span> String key, <span class="meta">@NonNull</span> Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//从map中获取model对象</span></span><br><span class="line">    ViewModel viewModel = mViewModelStore.get(key);</span><br><span class="line">    <span class="comment">//判断是否是同一个对象？如果是return此viewmode</span></span><br><span class="line">    <span class="keyword">if</span> (modelClass.isInstance(viewModel)) &#123;</span><br><span class="line">        <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (viewModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// <span class="doctag">TODO:</span> log a warning.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果不是则通过工厂类创建，然后缓存进stroe，并return</span></span><br><span class="line">    viewModel = mFactory.create(modelClass);</span><br><span class="line">    mViewModelStore.put(key, viewModel);</span><br><span class="line">    <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+好了，至此我们通过阅读源码，已经对viewmodel的工作原理有了一定的了解，那么们就来总结一下它如何通过一系列操作，来做到对view和model进行管理的。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1. 首先我们会在继承viewmodel的类中，做一些数据操作（初始化livedata），并提供set,get方法返回livedata对象。（代码省略...查看开头基本用法的代码块）</span></span><br><span class="line"><span class="comment">//2. 我们在view组件（activity/fragment）中拿到viewmodel对象</span></span><br><span class="line">MyViewModel model = ViewModelProviders.of(<span class="keyword">this</span>).get(MyViewModel.class);</span><br><span class="line"><span class="comment">//3. of()方法返回viewmodelprodiver对象</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(<span class="meta">@NonNull</span> FragmentActivity activity,<span class="meta">@Nullable</span> Factory factory)</span> </span>&#123;</span><br><span class="line">    Application application = checkApplication(activity);</span><br><span class="line">    <span class="keyword">if</span> (factory == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="comment">//4. 在of方法里初始化ViewModelProvider中AndroidViewModelFactory对象</span></span><br><span class="line">        factory = ViewModelProvider.AndroidViewModelFactory.getInstance(application);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//5. ViewModelProvider中传入ViewModelstore和factory对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(ViewModelStores.of(activity), factory);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//6. 工厂类 ViewModelStores.of(activity)方法返回ViewModelStore对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelStore <span class="title">of</span><span class="params">(<span class="meta">@NonNull</span> FragmentActivity activity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (activity <span class="keyword">instanceof</span> ViewModelStoreOwner) &#123;</span><br><span class="line">        <span class="keyword">return</span> ((ViewModelStoreOwner) activity).getViewModelStore();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//7.holderFragmentFor对象（HolderFragment）解决了屏幕旋转时数据保存。setRetainInstance(true);在里面初始化了ViewModelStore对象</span></span><br><span class="line">    <span class="keyword">return</span> holderFragmentFor(activity).getViewModelStore();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//8. 这时我们拿到了ViewModelProviders.of(this)返回的provider对象，然后调用get方法.get(MyViewModel.class);最终走到此get()方法</span></span><br><span class="line"><span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">get</span><span class="params">(<span class="meta">@NonNull</span> String key, <span class="meta">@NonNull</span> Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//从map中获取model对象</span></span><br><span class="line">    ViewModel viewModel = mViewModelStore.get(key);</span><br><span class="line">    <span class="comment">//判断是否是同一个对象？如果是return此viewmode</span></span><br><span class="line">    <span class="keyword">if</span> (modelClass.isInstance(viewModel)) &#123;</span><br><span class="line">        <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (viewModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// <span class="doctag">TODO:</span> log a warning.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果不是则通过工厂类创建，然后缓存进stroe，并return</span></span><br><span class="line">    viewModel = mFactory.create(modelClass);</span><br><span class="line">    mViewModelStore.put(key, viewModel);</span><br><span class="line">    <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//9. 返回了viewmodel对象，通过viewmodel的get方法拿到livedata对象，并在ui组件处于活跃状态时更新UI</span></span><br><span class="line">model.getUsers().observe(<span class="keyword">this</span>, users -&gt; &#123;</span><br><span class="line">            <span class="comment">// 更新 UI</span></span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="参考-amp-感谢"><a href="#参考-amp-感谢" class="headerlink" title="参考&amp;感谢"></a>参考&amp;感谢</h4><a href="https://www.jianshu.com/p/c729a086bd08">Android架构组件——ViewModel</a></li>
+</ul>
+<p><a href="https://www.wanandroid.com/">玩Android</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><strong>Viewmodel</strong>的职责是为UI组件管理数据。规范化viewmodel的使用方式，不要在viewmodel层中持有UI层的引用，避免因viewmodel超长的生命周期，导致内存泄漏。实现UI组件和数据间的管理和解耦，才是这个框架带给我们的理解。<br>通过我们对源码的分析，它的功能并不复杂，但设计的十分巧妙，背后掺杂的思想和理念才是值得去反复揣度的。它可以更好的实现把业务代码下沉到viewmodel中实现，既保证了UI组件中代码的清爽，又可以实现对数据的管理。</p>
+<p><strong>Viewmodel</strong>可以用于activity中不同fragment之间的通信，也可以用作Fragment之间一种解耦方式。</p>
+<p>接下来我们会讲到Android架构的另一个组件<strong>Room</strong>，来看下这个数据库能带给我们哪些惊艳？<br>当学习完所有的组件后，我们就开始尝试着去搭一款适合自己的MVVM框架，用于加深我们对Android架构组件的学习，从而做到学以致用。</p>
+<h4 id="Android架构组件系列文章"><a href="#Android架构组件系列文章" class="headerlink" title="Android架构组件系列文章"></a>Android架构组件系列文章</h4><p><a href="https://powerofandroid.com/">我的博客（Power）</a><br><a href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a><br><a href="https://www.jianshu.com/p/c13e240c9989">Android架构组件（二）：LiveData</a><br><a href="https://www.jianshu.com/p/be3f7b4b9974">Android架构组件（三）：Viewmodel</a><br><a href="https://www.jianshu.com/p/cf05150335df">Android架构组件（四）：Room</a></p>
+<p><strong>感谢您的阅读和支持！</strong></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>android架构组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android架构组件（二）：LiveData</title>
+    <url>/2019/10/22/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ALiveData/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>上篇文章我们分析了Lifecycle的使用和原理，相信我们已经学会了用<strong>Lifecycle</strong>将你所需的类添加声明周期管理，如果只是寥寥阅读也没关系，这里奉上（双膝跪地）上篇地址，<a href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a>，方便大家进行回顾。</p>
+<p>那么接下来我们就要学习第二个架构组件——<strong>LiveData</strong>，它是一个可观察的数据处理类，通过观察者模式，感知与其共生的其它组件的生命周期（例如：Activity，Fragment等），进而确保Livedata仅更新处于活跃状态下组件的观察者。</p>
+<p>接下来我将和大家一起了解和使用这些组件。<br>系列文章也会收录到<a href="https://powerofandroid.com/">我的博客（Power）</a>里，方便大家查阅。</p>
+<a id="more"></a>
+
+<h4 id="LiveData是什么？"><a href="#LiveData是什么？" class="headerlink" title="LiveData是什么？"></a>LiveData是什么？</h4><p>我们已经知道<strong>Livedata</strong>是一个可观察的数据处理类，它拥有以下几个特点：</p>
+<ul>
+<li><em>数据可以被观察者订阅</em></li>
+<li><em>能够感知组件（activity，fragment，service）的生命周期</em></li>
+<li><em>只有观察者处于（STRATED、RESUMED）状态，Livedata才会认为其处于活跃状态</em><br>下面我们来看下它的用法：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;String&gt; mLiveData;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        mLiveData = <span class="keyword">new</span> MutableLiveData&lt;&gt;();</span><br><span class="line">        mLiveData.observe(<span class="keyword">this</span>, <span class="keyword">new</span> Observer&lt;String&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">(<span class="meta">@Nullable</span> String s)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">&quot;数据已更新：&quot;</span> + s, Toast.LENGTH_SHORT);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onResume();</span><br><span class="line">        mLiveData.setValue(<span class="string">&quot;欢迎学习Livedata！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如你所见，Livedata其实就是一个存储数据的容器，每当容器里的数据发生变化，我们就可以从回调函数进行数据的操作。这很像我们控件的点击监听方法setOnclickListener();，其实点击事件的监听方法也是观察者模式，对于观察者来说，他并不关心数据是怎么来的，而是关心数据过来后如何处理。</li>
+</ul>
+<h4 id="LiveData优势有哪些？"><a href="#LiveData优势有哪些？" class="headerlink" title="LiveData优势有哪些？"></a>LiveData优势有哪些？</h4><ol>
+<li><p><strong>确保数据和UI保持统一。</strong><br> Livedata遵循观察者模式，其相当于被观察者。当生命周期或数据发生变化时，Livedata会通知Observer对象，并更新UI。</p>
+</li>
+<li><p><strong>不会发生内存泄漏。</strong><br> 这要得益于我们上篇讲的架构组件——<strong>Lifecycle</strong>，观察者Livedata会绑定Lifecycle，并在其关联的组件生周期遭到销毁后进行自我处理。<br> 我们来观察下它的源码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">observe</span><span class="params">(<span class="meta">@NonNull</span> LifecycleOwner owner, <span class="meta">@NonNull</span>     Observer&lt;T&gt; observer)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//LifecycleBoundObserver对象本质实现了lifecycle的LifecycleObserver接口，监听被观察者的状态改变</span></span><br><span class="line">    LifecycleBoundObserver wrapper = <span class="keyword">new</span> LifecycleBoundObserver(owner, observer);</span><br><span class="line">    <span class="comment">//下行代码的mObservers是Livedata为了管理每一个观察者对象创建的Map集合，并把每个观察者对象存进了集合</span></span><br><span class="line">    ObserverWrapper existing = mObservers.putIfAbsent(observer, wrapper);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//绑定生命周期</span></span><br><span class="line">    owner.getLifecycle().addObserver(wrapper);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>首先，我们看到注解@MainThread知道，这个方法<strong>必须运行在主线程中</strong>。两个参数中第一个参数其实是Activity/Fragment被抽象成了<strong>LifecycleOwner</strong>，学过上篇文章的可以很好理解，第二个参数<strong>Observer</strong>其实就是观察后的回调。<br>其次，我们看内部的实现方法。<strong>LifecycleBoundObserver</strong>对象就是传入了这两个参数，它被包装成了另一个对象，在它的内部实现了<strong>Lifecycle</strong>组件中的<strong>LifecycleObserver</strong>接口，和activity的生命周期进行绑定，在发生改变时及时<strong>更新Livedata</strong>的状态变化。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LifecycleBoundObserver</span> <span class="keyword">extends</span> <span class="title">ObserverWrapper</span> <span class="keyword">implements</span> <span class="title">GenericLifecycleObserver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@NonNull</span> <span class="keyword">final</span> LifecycleOwner mOwner;</span><br><span class="line"></span><br><span class="line">    LifecycleBoundObserver(<span class="meta">@NonNull</span> LifecycleOwner owner, Observer&lt;T&gt; observer) &#123;</span><br><span class="line">        <span class="keyword">super</span>(observer);</span><br><span class="line">        mOwner = owner;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">//每当activity的生命周期发生变化时都会回调该方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStateChanged</span><span class="params">(LifecycleOwner source, Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mOwner.getLifecycle().getCurrentState() == DESTROYED) &#123;</span><br><span class="line">            removeObserver(mObserver);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//更新Livedata的活跃状态 shouldBeactive方法里会判断状态是否是START并返回boolean值</span></span><br><span class="line">        activeStateChanged(shouldBeActive());</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就解释了为什么<strong>Livedata</strong>为什么不会发生内存泄漏问题，因为它和activity/fragment绑定了生命周期，在页面销毁时及时释放了内存。</p>
+</li>
+<li><p><strong>数据始终保持最新状态。</strong><br> 如果activity的状态再次从非活跃状态转换到活跃状态时会接收最新的数据。例如，曾经在后台的activity再返回前台后立刻更新数据。</p>
+</li>
+<li><p><strong>适当的配置修改。</strong> 例如旋转设备时activity重建后会立即更新数据。</p>
+<h4 id="数据更新后如何通知到回调方法？"><a href="#数据更新后如何通知到回调方法？" class="headerlink" title="数据更新后如何通知到回调方法？"></a>数据更新后如何通知到回调方法？</h4></li>
+</ol>
+<p><strong><em>Livedata</em></strong> 提供了两种方式供开发者更新数据，分别是 <strong><em>setvalue()</em></strong> 和 <strong><em>postValue()</em></strong> ；官方文档明确说明：*<strong>setValue()*** 方法必须在主线程调用，而 *</strong>postValue()*** 更适合在子线程中进行调用（比如网络请求等）。<br>我们先来看下<strong>setValue()</strong> 方法的实现原理：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//如果在子线程中调用会抛出异常</span></span><br><span class="line">    assertMainThread(<span class="string">&quot;setValue&quot;</span>);</span><br><span class="line">    <span class="comment">//更新内容器中的数据，自增version，赋值data</span></span><br><span class="line">    mVersion++;</span><br><span class="line">    mData = value;</span><br><span class="line">    <span class="comment">//循环调度容器中的值</span></span><br><span class="line">    dispatchingValue(<span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dispatchingValue</span><span class="params">(<span class="meta">@Nullable</span> ObserverWrapper initiator)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (Iterator&lt;Map.Entry&lt;Observer&lt;T&gt;, ObserverWrapper&gt;&gt; iterator =</span><br><span class="line">                        mObservers.iteratorWithAdditions(); iterator.hasNext(); ) &#123;</span><br><span class="line">         <span class="comment">//逐一让容器里的所有观察者执行这个通知方法</span></span><br><span class="line">         considerNotify(iterator.next().getValue());</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//上文的代码块我们知道这个considerNotify方法的参数就是LifecycleBoundObserver对象，内部实现了状态的监听。（记忆不深刻的可以翻上去看一眼）</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">considerNotify</span><span class="params">(ObserverWrapper observer)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//如果观察者不处于活跃状态，直接return</span></span><br><span class="line">    <span class="keyword">if</span> (!observer.mActive) &#123;</span><br><span class="line">       <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//再次检查状态，防止状态改变了但未收到通知</span></span><br><span class="line">    <span class="keyword">if</span> (!observer.shouldBeActive()) &#123;</span><br><span class="line">        observer.activeStateChanged(<span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果version小于之前的version，直接return</span></span><br><span class="line">    <span class="keyword">if</span> (observer.mLastVersion &gt;= mVersion) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    observer.mLastVersion = mVersion;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 处于活跃状态时调用livedata.observe()的第二个参数Observer里的onchanged方法，</span></span><br><span class="line"><span class="comment">     * 把新赋值的data传过去，实现回调</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    observer.mObserver.onChanged((T) mData);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>通过setValue()的核心方法我们知道它是如何通知并进行回调的了。但通常情况下Android是不允许在子线程中更新UI的，但是<strong>postValue()</strong> 方法却可以在<strong>子线程</strong>中更新livedata的数据，并通知UI进行更新，这是如何实现的呢？<br>我们来看一下<strong>postValue()</strong> 的源码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">postValue</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">    ArchTaskExecutor.getInstance().postToMainThread(mPostValueRunnable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postToMainThread</span><span class="params">(Runnable runnable)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获取主线程的looper，通过handle发送事件</span></span><br><span class="line">    <span class="keyword">if</span> (mMainHandler == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (mLock) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mMainHandler == <span class="keyword">null</span>) &#123;</span><br><span class="line">                mMainHandler = <span class="keyword">new</span> Handler(Looper.getMainLooper());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//发送事件后在Livedata中回调run方法</span></span><br><span class="line">    mMainHandler.post(runnable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Runnable mPostValueRunnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//其实post方法最终还是调用的set方法</span></span><br><span class="line">        setValue((T) newValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们分析到这里，想必我们对Livedata的工作原理有了一些了解，那么我们继续来探索它更细节的地方和用法吧。</p>
+<h4 id="更多探索"><a href="#更多探索" class="headerlink" title="更多探索"></a>更多探索</h4><ol>
+<li><p>我们知道<strong>Livedata只有观察者处于STARTED和RESUMED状态</strong>时，才会被认为是活跃状态，并更新相应数据和UI，这里我贴出大神<a href="https://juejin.im/post/5c25753af265da61561f5335">&lt;却把青梅嗅&gt;</a>的图片<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/livedata%E7%8A%B6%E6%80%81%E5%9B%BE1.png" alt="livedata状态图解"><br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/livedata%E7%8A%B6%E6%80%81%E5%9B%BE2.png"><br>从上述代码我们知道，livedata只收到了onStart，onResume，onPause这三个生命周期的回调，这是因为我们上述代码中有一个经常遇见的方法<strong>shouldBeActive()</strong> ，他的内部会进行比较compareTo，只有大于等于START状态才返回true，源码里我们发现只有STARTED和RESUME，否则直接return掉。<br>当然我们有时候碰见的需求要求<strong>activity在后台时依然能够响应数据的变更</strong>，那怎么办呢？不要慌，Livedata还提供了<strong>observerForever()</strong> 方法，在这种情况下，它能够响应到任何生命周期中数据的变更事件：<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/livedata%E7%8A%B6%E6%80%81%E5%9B%BE3.png" alt="observerForever回调周期"><br>observerForever()方法的源码也很巧妙，他的AlwaysActiveObserver继承自ObserverWrapper并重写了shoudlbeActive方法，并直接返回true，有兴趣的可以去源码里体验一下livedata的巧妙之处。</p>
+</li>
+<li><p><strong>将Livedata与Room一起使用</strong>。其实Room数据存储库支持返回Livedata对象的可观察查询，毕竟是一个老父亲嘛，想象这几个架构组件相互之间的关联与合作可以更加高效的为我们提供更稳定，安全的环境。<br>当数据库更新时，Room 会生成更新 LiveData 对象所需的所有代码。在需要时，生成的代码会在后台线程上异步运行查询。此模式有助于使界面中显示的数据与存储在数据库中的数据保持同步。后续的文章中我们会详细介绍这两个组件之间的协作。</p>
+</li>
+<li><p>Livedata还有<strong>更多的用法扩展</strong>，我将会在后续的学习中不断的补充，把更好更优秀的方案和数据处理方式分享给大家。</p>
+</li>
+</ol>
+<h4 id="参考-amp-感谢"><a href="#参考-amp-感谢" class="headerlink" title="参考&amp;感谢"></a>参考&amp;感谢</h4><p><a href="https://juejin.im/post/5c53beaf51882562e27e5ad9#heading-1">Android官方架构组件LiveData</a></p>
+<p><a href="https://www.wanandroid.com/">玩Android</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>我们通过文章已经基本了解了Livedata的工作原理，通过观察者模式和生命周期的绑定，我们可以更高效便捷的对数据进行处理并在适当的时候更新UI。当然，Livedata还有许多的用法我还没有接触到，也希望和各位同学一起学习进步。<br>接下来我们会讲到Android架构的另一个组件<strong>Viewmodel</strong>，我相信学习完viewmodel以后，我们可以尝试把这三个组件串联起来，体会它们所带给我们极佳的代码体验。<br>当学习完所有的组件后，我们就开始尝试着去搭一款适合自己的MVVM框架，用于加深我们对Android架构组件的学习，从而做到学以致用。</p>
+<h4 id="Android架构组件系列文章"><a href="#Android架构组件系列文章" class="headerlink" title="Android架构组件系列文章"></a>Android架构组件系列文章</h4><p><a href="https://powerofandroid.com/">我的博客（Power）</a><br><a href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a><br><a href="https://www.jianshu.com/p/c13e240c9989">Android架构组件（二）：LiveData</a><br><a href="https://www.jianshu.com/p/be3f7b4b9974">Android架构组件（三）：Viewmodel</a><br><a href="https://www.jianshu.com/p/cf05150335df">Android架构组件（四）：Room</a></p>
+<p><strong>感谢您的阅读和支持！</strong></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>android架构组件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin学习（一）：我TM谢谢你！(基础语法篇)</title>
+    <url>/2019/07/30/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%88%91TM%E8%B0%A2%E8%B0%A2%E4%BD%A0%EF%BC%81(%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%AF%87)/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>自从2017年Google定义Kotlin为Android开发的官方语言，瞬间掀起了学习大潮，各种学习博客如雨后春笋般攻击我这颗弱小而又无助的小心脏！是你们，是的，就是因为你们使我变得越来越强大，我TM替我日益稀疏的头发谢谢各位学霸！！！所以，搞起来吧！开启我们从乌黑亮丽到寸草不生的kotlin学习之旅！<br><a href="https://powerofandroid.com/">我的博客（Power）</a></p>
+<a id="more"></a>
+
+<p><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/gif/%E7%BB%99%E5%AD%A6%E9%9C%B8%E8%B7%AA%E4%BA%86.gif"><br>作为Android开发水军中的一员，其实很早就简单看了语法，其中的优缺点这里就不再过多陈述，不清楚或想详细了解的请自行<a href="https://www.baidu.com/">社会你度十三娘</a>，鉴于大家如果能有幸看见这边文章，想必对我们吃饭的家伙熟悉程度应该不亚于我了，所以对于Android studio的环境配置这里小弟就不再卖弄风骚了，毕竟在座的各位都是学霸，VIP中P…<br>这里在开头也为大家分享一些大牛关于学习Kotlin的链接，有助于大家在吃百家饭的时候，不容易养成挑食的小毛病。<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/%E8%90%BD%E9%AD%84%E7%9A%84Android%E5%BC%80%E5%8F%91.jpeg"><br>本系列均踩在各位巨人的肩膀上总结而成！请各位看官轻喷…<br><a href="https://www.kotlincn.net/">Kotlin语言中国</a><br><a href="https://www.runoob.com/kotlin/kotlin-tutorial.html">Kotlin-菜鸟教程</a><br><a href="https://www.jianshu.com/p/f98dcd2da323">Kotlin入门到进阶</a><br><a href="https://www.wanandroid.com/article/query?k=kotlin">玩Android-kotlin文章</a></p>
+<h3 id="Kotlin基础语法"><a href="#Kotlin基础语法" class="headerlink" title="Kotlin基础语法"></a>Kotlin基础语法</h3><ol>
+<li><p>函数的定义<br> 函数使用关键字 fun，参数格式为：参数 : 类型</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//  sum:函数名 a,b参数名，Int参数类型</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">sum</span><span class="params">(a: <span class="type">Int</span>, b: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;<span class="comment">// :后边Int为返回值类型</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>这里需要注意如果是public则必须声明返回值类型，如果是无返回值的函数（:Unit）则可以省略。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">unitFun</span><span class="params">()</span></span> : <span class="built_in">Unit</span>&#123;</span><br><span class="line">    println(<span class="string">&quot;我是返回值为Unit的函数，Unit可省略&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">    <span class="comment">// return Unit 可省略</span></span><br><span class="line">    <span class="comment">// 或者 return  可省略</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">unitFun</span><span class="params">()</span></span>&#123;</span><br><span class="line">    println(<span class="string">&quot;我是返回值为Unit的函数，Unit可省略&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>可变长参数函数，用 vararg 关键字进行标识</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">vars</span><span class="params">(<span class="keyword">vararg</span> v:<span class="type">Int</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(vt <span class="keyword">in</span> v)&#123;</span><br><span class="line">        print(vt)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    vars(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)  <span class="comment">// 输出12345</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>常量与变量<br> 变量：var &lt;标识符&gt; : &lt;类型&gt; = &lt;初始化值&gt;</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> x: <span class="built_in">Int</span> = <span class="number">5</span>        <span class="comment">// 系统自动推断变量类型为Int</span></span><br><span class="line">x += <span class="number">1</span>                <span class="comment">// 变量可修改</span></span><br></pre></td></tr></table></figure>
+<p> 常量：val &lt;标识符&gt; : &lt;类型&gt; = &lt;初始化值&gt;</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> a: <span class="built_in">Int</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">val</span> b = <span class="number">1</span>       <span class="comment">// 系统自动推断变量类型为Int</span></span><br><span class="line"><span class="keyword">val</span> c: <span class="built_in">Int</span>      <span class="comment">// 如果不在声明时初始化则必须提供变量类型</span></span><br><span class="line">c = <span class="number">1</span>           <span class="comment">// 明确赋值</span></span><br></pre></td></tr></table></figure>
+<h3 id="Kotlin基本数据类型"><a href="#Kotlin基本数据类型" class="headerlink" title="Kotlin基本数据类型"></a>Kotlin基本数据类型</h3><p>基础数据类型包含有：</p>
+</li>
+</ol>
+<ul>
+<li>数值类型</li>
+<li>字符类型</li>
+<li>字符串类型</li>
+<li>布尔类型</li>
+<li>数组类型</li>
+</ul>
+<ol>
+<li>数值类型（Numbers）<br> Kotlin 的基本数值类型包括 Byte、Short、Int、Long、Float、Double 等<br> 不同于 Java 的是，字符不属于数值类型，是一个独立的数据类型。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">位宽度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Byte</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">Short</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">Int</td>
+<td align="center">32</td>
+</tr>
+<tr>
+<td align="center">Long</td>
+<td align="center">64</td>
+</tr>
+<tr>
+<td align="center">Float</td>
+<td align="center">32</td>
+</tr>
+<tr>
+<td align="center">Double</td>
+<td align="center">64</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li><p>字符类型（Characters）<br> 和 Java 不一样，Kotlin 中的 Char 不能直接和数字操作，Char 必需是单引号 ‘ 包含起来的。比如普通字符 ‘0’，’a’</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> ch :<span class="built_in">Char</span> = <span class="number">1</span>; <span class="comment">// 错误示范</span></span><br><span class="line"><span class="keyword">val</span> ch :<span class="built_in">Char</span> = <span class="string">&#x27;1&#x27;</span>; <span class="comment">// 正确示范</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符类型转换成数字</span></span><br><span class="line"><span class="keyword">val</span> ch :<span class="built_in">Char</span> = <span class="string">&#x27;8&#x27;</span>;</span><br><span class="line"><span class="keyword">val</span> a :<span class="built_in">Int</span> = ch.toInt()</span><br></pre></td></tr></table></figure></li>
+<li><p>字符串类型（Strings）<br> 和 Java 一样，String 是不可变的。</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1.方括号 [] 语法可以很方便的获取字符串中的某个字符，也可以通过 for 循环来遍历：</span></span><br><span class="line"><span class="keyword">for</span> (c <span class="keyword">in</span> str) &#123;</span><br><span class="line">    println(c)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//2.支持三个引号 &quot;&quot;&quot; 扩起来的字符串，支持多行字符串，比如：</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> text = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    多行字符串</span></span><br><span class="line"><span class="string">    多行字符串</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    println(text)   // 输出有一些前置空格</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">//3.String 可以通过 trimMargin() 方法来删除多余的空白:</span></span><br><span class="line"><span class="string">fun main(args: Array&lt;String&gt;) &#123;</span></span><br><span class="line"><span class="string">    val text = &quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    |多行字符串</span></span><br><span class="line"><span class="string">    |菜鸟教程</span></span><br><span class="line"><span class="string">    |多行字符串</span></span><br><span class="line"><span class="string">    |Runoob</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>.trimMargin()</span><br><span class="line">    println(text)    <span class="comment">// 前置空格删除了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 字符串模板：即在字符串内通过一些小段代码求值并把结果合并到字符串中。模板表达式以美元符（$）开头</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> i = <span class="number">10</span></span><br><span class="line">    <span class="keyword">val</span> s = <span class="string">&quot;i = <span class="variable">$i</span>&quot;</span> </span><br><span class="line">    println(s) <span class="comment">// 求值结果为 &quot;i = 10&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//用花括号扩起来的任意表达式:</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> s = <span class="string">&quot;runoob&quot;</span></span><br><span class="line">    <span class="keyword">val</span> str = <span class="string">&quot;<span class="variable">$s</span>.length is <span class="subst">$&#123;s.length&#125;</span>&quot;</span> </span><br><span class="line">    println(str) <span class="comment">// 求值结果为 &quot;runoob.length is 6&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>布尔类型（Boolean）<br> 布尔用 Boolean 类型表示，它有两个值：true 和 false。<br> 内置的布尔运算有：</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">|| – 短路逻辑或</span><br><span class="line">&amp;&amp; – 短路逻辑与</span><br><span class="line">! - 逻辑非</span><br></pre></td></tr></table></figure></li>
+<li><p>数组类型（Arrays）<br> 数组用类 Array 实现，并且还有一个 size 属性及 get 和 set 方法，由于使用 [] 重载了 get 和 set 方法，所以我们可以通过下标很方便的获取或者设置数组对应位置的值。<br>数组的创建两种方式：一种是使用函数arrayOf()；另外一种是使用工厂函数。</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="comment">//[1,2,3]</span></span><br><span class="line">    <span class="keyword">val</span> a = arrayOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="comment">//[0,2,4]</span></span><br><span class="line">    <span class="keyword">val</span> b = Array(<span class="number">3</span>, &#123; i -&gt; (i * <span class="number">2</span>) &#125;)</span><br><span class="line">    <span class="comment">//读取数组内容</span></span><br><span class="line">    println(a[<span class="number">0</span>])    <span class="comment">// 输出结果：1</span></span><br><span class="line">    println(b[<span class="number">1</span>])    <span class="comment">// 输出结果：2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 注意: 与 Java 不同的是，Kotlin 中数组是不型变的（invariant）<br> 除了类Array，还有ByteArray, ShortArray, IntArray等等，用来表示各个类型的数组，省去了装箱操作，因此效率更高，其用法同Array一样：</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> x: IntArray = intArrayOf(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">x[<span class="number">0</span>] = x[<span class="number">1</span>] + x[<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="Kotlin的Null安全设计"><a href="#Kotlin的Null安全设计" class="headerlink" title="Kotlin的Null安全设计"></a>Kotlin的Null安全设计</h3><ol>
+<li><p>声明可为null参数及null判断处理<br> 类型后面加 ？ 即表示可为null<br> 进行判null处理时有两种方式：<br> 第一种就是字段后加 !!    表示像java一样抛出null异常<br> 第二种就是字段后加 ?     表示不作处理，可以返回null<br> 第三种就是字段后加 ?:    表示字段为null时返回的值<br> 当然， if/else也是可以的，在使用if判null后，可自动转换为非null变量</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//类型后面加?表示可为空</span></span><br><span class="line"><span class="keyword">var</span> age: String? = <span class="string">&quot;23&quot;</span> </span><br><span class="line"><span class="comment">//抛出空指针异常</span></span><br><span class="line"><span class="keyword">val</span> ages = age!!.toInt()</span><br><span class="line"><span class="comment">//不做处理返回 null</span></span><br><span class="line"><span class="keyword">val</span> ages1 = age?.toInt()</span><br><span class="line"><span class="comment">//age为空返回-1</span></span><br><span class="line"><span class="keyword">val</span> ages2 = age?.toInt() ?: -<span class="number">1</span></span><br></pre></td></tr></table></figure></li>
+<li><p>函数中使用可null类型<br> 当一个函数/方法有返回值时，如果方法中的代码使用?.去返回一个值，那么方法的返回值的类型后面也要加上 ? 符号</p>
+ <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">funNullMethod</span><span class="params">()</span></span> : <span class="built_in">Int</span>? &#123;</span><br><span class="line">    <span class="keyword">val</span> str : String? = <span class="string">&quot;123456&quot;</span></span><br><span class="line">    <span class="keyword">return</span> str?.length</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出：6</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="Kotlin的类型检测及自动类型转换"><a href="#Kotlin的类型检测及自动类型转换" class="headerlink" title="Kotlin的类型检测及自动类型转换"></a>Kotlin的类型检测及自动类型转换</h3><ul>
+<li><p>我们可以使用 is 运算符检测一个表达式是否某类型的一个实例(类似于Java中的instanceof关键字)</p>
+  <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getStringLength</span><span class="params">(obj: <span class="type">Any</span>)</span></span>: <span class="built_in">Int</span>? &#123;</span><br><span class="line">  <span class="keyword">if</span> (obj <span class="keyword">is</span> String) &#123;</span><br><span class="line">    <span class="comment">// 做过类型判断以后，obj会被系统自动转换为String类型</span></span><br><span class="line">    <span class="keyword">return</span> obj.length </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//在这里还有一种方法，与Java中instanceof不同，使用!is</span></span><br><span class="line">  <span class="comment">// if (obj !is String)&#123;</span></span><br><span class="line">  <span class="comment">//   // XXX</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这里的obj仍然是Any类型的引用</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getStringLength</span><span class="params">(obj: <span class="type">Any</span>)</span></span>: <span class="built_in">Int</span>? &#123;</span><br><span class="line">  <span class="keyword">if</span> (obj !<span class="keyword">is</span> String)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  <span class="comment">// 在这个分支中, `obj` 的类型会被自动转换为 `String`</span></span><br><span class="line">  <span class="keyword">return</span> obj.length</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//甚至还可以</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getStringLength</span><span class="params">(obj: <span class="type">Any</span>)</span></span>: <span class="built_in">Int</span>? &#123;</span><br><span class="line">  <span class="comment">// 在 `&amp;&amp;` 运算符的右侧, `obj` 的类型会被自动转换为 `String`</span></span><br><span class="line">  <span class="keyword">if</span> (obj <span class="keyword">is</span> String &amp;&amp; obj.length &gt; <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> obj.length</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Kotlin的区间表达式"><a href="#Kotlin的区间表达式" class="headerlink" title="Kotlin的区间表达式"></a>Kotlin的区间表达式</h3><ul>
+<li><p>区间表达式由具有操作符形式 .. 的 rangeTo 函数辅以 in 和 !in 形成。</p>
+</li>
+<li><p>区间是为任何可比较类型定义的，但对于整型原生类型，它有一个优化的实现。以下是使用区间的一些示例:</p>
+  <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.4</span>) print(i) <span class="comment">// 输出“1234”</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">4.</span><span class="number">.1</span>) print(i) <span class="comment">// 什么都不输出</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span>) &#123; <span class="comment">// 等同于 1 &lt;= i &amp;&amp; i &lt;= 10</span></span><br><span class="line">    println(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 step 指定步长</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.4</span> step <span class="number">2</span>) print(i) <span class="comment">// 输出“13”</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">4</span> downTo <span class="number">1</span> step <span class="number">2</span>) print(i) <span class="comment">// 输出“42”</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 until 函数排除结束元素</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span> until <span class="number">10</span>) &#123;   <span class="comment">// i in [1, 10) 排除了 10</span></span><br><span class="line">    println(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//实测示例</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    print(<span class="string">&quot;循环输出：&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.4</span>) print(i) <span class="comment">// 输出“1234”</span></span><br><span class="line">    println(<span class="string">&quot;\n----------------&quot;</span>)</span><br><span class="line">    print(<span class="string">&quot;设置步长：&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.4</span> step <span class="number">2</span>) print(i) <span class="comment">// 输出“13”</span></span><br><span class="line">    println(<span class="string">&quot;\n----------------&quot;</span>)</span><br><span class="line">    print(<span class="string">&quot;使用 downTo：&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">4</span> downTo <span class="number">1</span> step <span class="number">2</span>) print(i) <span class="comment">// 输出“42”</span></span><br><span class="line">    println(<span class="string">&quot;\n----------------&quot;</span>)</span><br><span class="line">    print(<span class="string">&quot;使用 until：&quot;</span>)</span><br><span class="line">    <span class="comment">// 使用 until 函数排除结束元素</span></span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span> until <span class="number">4</span>) &#123;   <span class="comment">// i in [1, 4) 排除了 4</span></span><br><span class="line">    print(i)</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">&quot;\n----------------&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    输出结果：</span></span><br><span class="line"><span class="comment">    循环输出：1234</span></span><br><span class="line"><span class="comment">    ----------------</span></span><br><span class="line"><span class="comment">    设置步长：13</span></span><br><span class="line"><span class="comment">    ----------------</span></span><br><span class="line"><span class="comment">    使用 downTo：42</span></span><br><span class="line"><span class="comment">    ----------------</span></span><br><span class="line"><span class="comment">    使用 until：123</span></span><br><span class="line"><span class="comment">    ----------------</span></span><br><span class="line"><span class="comment">    */</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin学习（二）：控制语句详解篇</title>
+    <url>/2019/08/14/Kotlin%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5%E8%AF%A6%E8%A7%A3%E7%AF%87/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>通过上一篇的学习，我们对kotlin已经掌握了函数的定义，基本数据类型，null安全设计，类型检测及自动转换和Kotlin的区间表达式，如果您还有任何不明白的地方，请跳转至我的上一篇博客：<br><a href="https://www.jianshu.com/p/090535b596c1">《Kotlin学习（一）：我TM谢谢你！(基础语法篇)》</a><br>对于kotlin，这只是最基础的入门讲解，也希望大家能够跟我一样逐渐适应kotlin的美，我们一起进步，我相信通过一段时间的学习，我也可以像大家分享一些kotlin的语法糖以及更深入的使用。<a href="https://powerofandroid.com/">我的博客（Power）</a></p>
+<h4 id="kotlin控制语句详解"><a href="#kotlin控制语句详解" class="headerlink" title="kotlin控制语句详解"></a>kotlin控制语句详解</h4><ul>
+<li>条件控制语句：if 语句、when 语句</li>
+<li>循环控制语句：for 循环、while与do…while 循环</li>
+<li>返回和跳转语句：return、 break、 continue</li>
+</ul>
+<a id="more"></a>
+
+<h4 id="1-if语句"><a href="#1-if语句" class="headerlink" title="1. if语句"></a>1. if语句</h4><p>kotlin的if表达式其实和java是非常类似的，唯一不同的地方在于kotlin可以把表达式的结果赋值给变量，类似于java的三元运算符，我们可以直接实现。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 传统用法</span></span><br><span class="line"><span class="keyword">var</span> max = a </span><br><span class="line"><span class="keyword">if</span> (a &lt; b) max = b</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 else </span></span><br><span class="line"><span class="keyword">var</span> max: <span class="built_in">Int</span></span><br><span class="line"><span class="keyword">if</span> (a &gt; b) &#123;</span><br><span class="line">    max = a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    max = b</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 作为表达式</span></span><br><span class="line"><span class="keyword">val</span> max = <span class="keyword">if</span> (a &gt; b) a <span class="keyword">else</span> b</span><br></pre></td></tr></table></figure>
+<p>举例：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span>(x&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        println(<span class="string">&quot;x 大于 0&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x==<span class="number">0</span>)&#123;</span><br><span class="line">        println(<span class="string">&quot;x 等于 0&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        println(<span class="string">&quot;x 小于 0&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">2</span></span><br><span class="line">    <span class="keyword">val</span> c = <span class="keyword">if</span> (a&gt;=b) a <span class="keyword">else</span> b</span><br><span class="line">    println(<span class="string">&quot;c 的值为 <span class="variable">$c</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为：</span></span><br><span class="line">x 等于 <span class="number">0</span></span><br><span class="line">c 的值为 <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-when表达式"><a href="#2-when表达式" class="headerlink" title="2. when表达式"></a>2. when表达式</h4><p>when 将它的参数和所有的分支条件顺序比较，直到某个分支满足条件。<br>when 既可以被当做表达式使用也可以被当做语句使用。如果它被当做表达式，符合条件的分支的值就是整个表达式的值，如果当做语句使用， 则忽略个别分支的值。<br>我们看下例子：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在 when 中，else 同 switch 的 default。如果其他分支都不满足条件将会求值 else 分支</span></span><br><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="number">1</span> -&gt; print(<span class="string">&quot;x == 1&quot;</span>)</span><br><span class="line">    <span class="number">2</span> -&gt; print(<span class="string">&quot;x == 2&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; &#123; <span class="comment">// 注意这个块,else 相当于 switch 的 default</span></span><br><span class="line">        print(<span class="string">&quot;x 不是 1 ，也不是 2&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果很多分支需要用相同的方式处理，则可以把多个分支条件放在一起，用逗号分隔</span></span><br><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="number">0</span>, <span class="number">1</span> -&gt; print(<span class="string">&quot;x == 0 or x == 1&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(<span class="string">&quot;otherwise&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//我们也可以检测一个值在（in）或者不在（!in）一个区间或者集合中</span></span><br><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span> -&gt; print(<span class="string">&quot;x is in the range&quot;</span>)</span><br><span class="line">    <span class="keyword">in</span> validNumbers -&gt; print(<span class="string">&quot;x is valid&quot;</span>)</span><br><span class="line">    !<span class="keyword">in</span> <span class="number">10.</span><span class="number">.20</span> -&gt; print(<span class="string">&quot;x is outside the range&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(<span class="string">&quot;none of the above&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//另一种可能性是检测一个值是（is）或者不是（!is）一个特定类型的值。注意： 由于智能转换，你可以访问该类型的方法和属性而无需 任何额外的检测</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">hasPrefix</span><span class="params">(x: <span class="type">Any</span>)</span></span> = <span class="keyword">when</span>(x) &#123;</span><br><span class="line">    <span class="keyword">is</span> String -&gt; x.startsWith(<span class="string">&quot;prefix&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//when 也可以用来取代 if-else if链。 如果不提供参数，所有的分支条件都是简单的布尔表达式，而当一个分支的条件为真时则执行该分支</span></span><br><span class="line"><span class="keyword">when</span> &#123;</span><br><span class="line">    x.isOdd() -&gt; print(<span class="string">&quot;x is odd&quot;</span>)</span><br><span class="line">    x.isEven() -&gt; print(<span class="string">&quot;x is even&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(<span class="string">&quot;x is funny&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//when 中使用 in 运算符来判断集合内是否包含某实例</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> items = setOf(<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;kiwi&quot;</span>)</span><br><span class="line">    <span class="keyword">when</span> &#123;</span><br><span class="line">        <span class="string">&quot;orange&quot;</span> <span class="keyword">in</span> items -&gt; println(<span class="string">&quot;juicy&quot;</span>)</span><br><span class="line">        <span class="string">&quot;apple&quot;</span> <span class="keyword">in</span> items -&gt; println(<span class="string">&quot;apple is fine too&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>举例：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">0</span></span><br><span class="line">    <span class="keyword">when</span> (x) &#123;</span><br><span class="line">        <span class="number">0</span>, <span class="number">1</span> -&gt; println(<span class="string">&quot;x == 0 or x == 1&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span> -&gt; println(<span class="string">&quot;otherwise&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">when</span> (x) &#123;</span><br><span class="line">        <span class="number">1</span> -&gt; println(<span class="string">&quot;x == 1&quot;</span>)</span><br><span class="line">        <span class="number">2</span> -&gt; println(<span class="string">&quot;x == 2&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span> -&gt; &#123; <span class="comment">// 注意这个块</span></span><br><span class="line">            println(<span class="string">&quot;x 不是 1 ，也不是 2&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">when</span> (x) &#123;</span><br><span class="line">        <span class="keyword">in</span> <span class="number">0.</span><span class="number">.10</span> -&gt; println(<span class="string">&quot;x 在该区间范围内&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span> -&gt; println(<span class="string">&quot;x 不在该区间范围内&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果：</span></span><br><span class="line">x == <span class="number">0</span> or x == <span class="number">1</span></span><br><span class="line">x 不是 <span class="number">1</span> ，也不是 <span class="number">2</span></span><br><span class="line">x 在该区间范围内</span><br></pre></td></tr></table></figure>
+<h4 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3. for循环"></a>3. for循环</h4><ul>
+<li>for 循环可以对任何提供迭代器（iterator）的对象进行遍历</li>
+<li>kotlin 废除了 java 的 <code>for(int i = 0; i &lt; list.size(); i++)</code>规则，新增了其他的规则，来满足对数组或集合的遍历</li>
+<li>循环数组会编译成优化的实现而不会创建额外对象，或者你可以用库函数 withIndex：<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//for循环可以对任何提供迭代器（iterator）的对象进行遍历</span></span><br><span class="line"><span class="keyword">for</span> (item <span class="keyword">in</span> collection) print(item)</span><br><span class="line"><span class="keyword">for</span> (item: <span class="built_in">Int</span> <span class="keyword">in</span> ints) &#123;</span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果你想要通过索引遍历一个数组或者一个 list</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> array.indices) &#123;</span><br><span class="line">    print(array[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//循环数组会编译成优化的实现而不会创建额外对象，或者你可以用库函数 withIndex：</span></span><br><span class="line"><span class="keyword">for</span> ((index, value) <span class="keyword">in</span> array.withIndex()) &#123;</span><br><span class="line">    println(<span class="string">&quot;the element at <span class="variable">$index</span> is <span class="variable">$value</span>&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+举例：<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 循环5次，且步长为1的递增</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">0</span> until <span class="number">5</span>)&#123;</span><br><span class="line">  print(<span class="string">&quot;i =&gt; <span class="variable">$i</span> \t&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环5次，且步长为1的递减</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">15</span> downTo <span class="number">11</span>)&#123;</span><br><span class="line">    print(<span class="string">&quot;i =&gt; <span class="variable">$i</span> \t&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;使用 符号`..`的打印结果\n&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">20</span> .. <span class="number">25</span>)&#123;</span><br><span class="line">    print(<span class="string">&quot;i =&gt; <span class="variable">$i</span> \t&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;使用until的打印结果\n&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">20</span> until <span class="number">25</span>)&#123;</span><br><span class="line">    print(<span class="string">&quot;i =&gt; <span class="variable">$i</span> \t&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果：</span></span><br><span class="line">使用 符号`..`的打印结果</span><br><span class="line">i =&gt; <span class="number">20</span>  i =&gt; <span class="number">21</span>  i =&gt; <span class="number">22</span>  i =&gt; <span class="number">23</span>  i =&gt; <span class="number">24</span>  i =&gt; <span class="number">25</span>     </span><br><span class="line">使用until的打印结果</span><br><span class="line">i =&gt; <span class="number">20</span>  i =&gt; <span class="number">21</span>  i =&gt; <span class="number">22</span>  i =&gt; <span class="number">23</span>  i =&gt; <span class="number">24</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//使用数组的indices属性遍历</span></span><br><span class="line"><span class="keyword">var</span> arrayListTwo = arrayOf(<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>)</span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> arrayListTwo.indices)&#123;</span><br><span class="line">    println(<span class="string">&quot;arrayListTwo[<span class="variable">$i</span>] =&gt; &quot;</span> + arrayListTwo[i])</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果：</span></span><br><span class="line">arrayListTwo[<span class="number">0</span>] =&gt; <span class="number">1</span></span><br><span class="line">arrayListTwo[<span class="number">1</span>] =&gt; <span class="number">3</span></span><br><span class="line">arrayListTwo[<span class="number">2</span>] =&gt; <span class="number">5</span></span><br><span class="line">arrayListTwo[<span class="number">3</span>] =&gt; <span class="number">7</span></span><br><span class="line">arrayListTwo[<span class="number">4</span>] =&gt; <span class="number">9</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用数组的withIndex()方法遍历</span></span><br><span class="line"><span class="keyword">var</span> arrayListTwo = arrayOf(<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>)</span><br><span class="line"><span class="keyword">for</span> ((index,value) <span class="keyword">in</span> arrayListTwo.withIndex())&#123;</span><br><span class="line">    println(<span class="string">&quot;index =&gt; <span class="variable">$index</span> \t value =&gt; <span class="variable">$value</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果：</span></span><br><span class="line">index =&gt; <span class="number">0</span>   value =&gt; <span class="number">1</span></span><br><span class="line">index =&gt; <span class="number">1</span>   value =&gt; <span class="number">3</span></span><br><span class="line">index =&gt; <span class="number">2</span>   value =&gt; <span class="number">5</span></span><br><span class="line">index =&gt; <span class="number">3</span>   value =&gt; <span class="number">7</span></span><br><span class="line">index =&gt; <span class="number">4</span>   value =&gt; <span class="number">9</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-while，-do…while语句"><a href="#4-while，-do…while语句" class="headerlink" title="4. while， do…while语句"></a>4. while， do…while语句</h4>kotlin的while语句和java的while语句一样，下面我们直接举栗：<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">5</span></span><br><span class="line"><span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> (num &lt; <span class="number">10</span>)&#123;</span><br><span class="line">    println(<span class="string">&quot;num =&gt; <span class="variable">$num</span>&quot;</span>)</span><br><span class="line">    println(<span class="string">&quot;循环了<span class="variable">$count</span> 次&quot;</span>)</span><br><span class="line">    count++</span><br><span class="line">    num++</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果：</span></span><br><span class="line">num =&gt; <span class="number">5</span></span><br><span class="line">循环了<span class="number">1</span> 次</span><br><span class="line">num =&gt; <span class="number">6</span></span><br><span class="line">循环了<span class="number">2</span> 次</span><br><span class="line">num =&gt; <span class="number">7</span></span><br><span class="line">循环了<span class="number">3</span> 次</span><br><span class="line">num =&gt; <span class="number">8</span></span><br><span class="line">循环了<span class="number">4</span> 次</span><br><span class="line">num =&gt; <span class="number">9</span></span><br><span class="line">循环了<span class="number">5</span> 次</span><br><span class="line"></span><br><span class="line"><span class="comment">//do...while语句</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">5</span></span><br><span class="line"><span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    println(<span class="string">&quot;num =&gt; <span class="variable">$num</span>&quot;</span>)</span><br><span class="line">    println(<span class="string">&quot;循环了<span class="variable">$count</span> 次&quot;</span>)</span><br><span class="line">    count++</span><br><span class="line">    num++</span><br><span class="line">&#125;<span class="keyword">while</span> (num &lt; <span class="number">10</span>)</span><br><span class="line"><span class="comment">//输出结果：</span></span><br><span class="line">num =&gt; <span class="number">5</span></span><br><span class="line">循环了<span class="number">1</span> 次</span><br><span class="line">num =&gt; <span class="number">6</span></span><br><span class="line">循环了<span class="number">2</span> 次</span><br><span class="line">num =&gt; <span class="number">7</span></span><br><span class="line">循环了<span class="number">3</span> 次</span><br><span class="line">num =&gt; <span class="number">8</span></span><br><span class="line">循环了<span class="number">4</span> 次</span><br><span class="line">num =&gt; <span class="number">9</span></span><br><span class="line">循环了<span class="number">5</span> 次</span><br><span class="line"></span><br><span class="line"><span class="comment">// *注* : do&#123;...&#125;while(exp)与while(exp)&#123;...&#125;最大的区别是do&#123;...&#125;while(exp)最少执行一次，这点也是和Java相同的</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-返回和跳转语句"><a href="#5-返回和跳转语句" class="headerlink" title="5. 返回和跳转语句"></a>5. 返回和跳转语句</h4>return、break、continue的用法和java是一样的，</li>
+<li>eturn。默认从最直接包围它的函数或者匿名函数返回</li>
+<li>break。终止最直接包围它的循环</li>
+<li>continue。继续下一次最直接包围它的循环<br>我们直接看代码吧：<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i==<span class="number">3</span>) <span class="keyword">continue</span>  <span class="comment">// i 为 3 时跳过当前循环，继续下一次循环</span></span><br><span class="line">        println(i)</span><br><span class="line">        <span class="keyword">if</span> (i&gt;<span class="number">5</span>) <span class="keyword">break</span>   <span class="comment">// i 为 6 时 跳出循环</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为：1 2 4 5 6</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">returnExample</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> str: String = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> (str.isBlank())&#123;</span><br><span class="line">        println(<span class="string">&quot;我退出了该方法&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为：我退出了该方法</span></span><br></pre></td></tr></table></figure></li>
+<li>Break 和 Continue 标签<br>在 Kotlin 中任何表达式都可以用标签（label）来标记。 标签的格式为标识符后跟 @ 符号，例如：abc@、fooBar@都是有效的标签。 要为一个表达式加标签，我们只要在其前加标签即可<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="symbol">loop@</span> <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.100</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (j <span class="keyword">in</span> <span class="number">1.</span><span class="number">.100</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (……) <span class="keyword">break</span><span class="symbol">@loop</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>鸿蒙-HarmonyOS—01.入门介绍及环境搭建</title>
+    <url>/2020/12/17/%E9%B8%BF%E8%92%99-HarmonyOS%E2%80%9401.%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>2020年12月16日，华为正式发布了HarmonyOS2.0手机开发者Beta版本。华为部分机型已经开放更新至鸿蒙系统，So，是时候来一波视觉及使用体验了！接下来我会用系列文章来详细介绍和使用HarmonyOS系统，尽量用通俗易懂的语言和视觉两方面来阐述我的所学所用，真正的能给大家带来一些帮助，是我写作的初衷。</p>
+<p>今天的开篇章我们主要介绍一些基础的配置流程，它们包含：</p>
+<ol>
+<li><strong>HarmontOS概述</strong></li>
+<li><strong>开发工具DevEco Studio介绍及下载</strong></li>
+<li><strong>搭建开发环境的流程,创建我们的第一个Project</strong></li>
+<li><strong>工程目录介绍</strong></li>
+</ol>
+<a id="more"></a>
+
+<h4 id="HarmonyOS概述"><a href="#HarmonyOS概述" class="headerlink" title="HarmonyOS概述"></a>HarmonyOS概述</h4><ol>
+<li><p>系统定位</p>
+<p>HarmonyOS是一款“面向未来”、面向全场景（移动办公、运动健康、社交通信、媒体娱乐等）的分布式操作系统。在传统的单设备系统能力的基础上，HarmonyOS提出了基于同一套系统能力、适配多种终端形态的分布式理念，能够支持手机、平板、智能穿戴、智慧屏、车机等多种终端设备。</p>
+<ul>
+<li>对消费者而言，HarmonyOS能够将生活场景中的各类终端进行能力整合，可以实现不同的终端设备之间的快速连接、能力互助、资源共享，匹配合适的设备、提供流畅的全场景体验。</li>
+<li>对应用开发者而言，HarmonyOS采用了多种分布式技术，使得应用程序的开发实现与不同终端设备的形态差异无关。这能够让开发者聚焦上层业务逻辑，更加便捷、高效地开发应用。</li>
+<li>对设备开发者而言，HarmonyOS采用了组件化的设计方案，可以根据设备的资源能力和业务特征进行灵活裁剪，满足不同形态的终端设备对于操作系统的要求。</li>
+</ul>
+<p>HarmonyOS提供了支持多种开发语言的API，供开发者进行应用开发。支持的开发语言包括Java、XML（Extensible Markup Language）、C/C++ 、 JS（JavaScript）、CSS（Cascading Style Sheets）和HML（HarmonyOS Markup Language）。</p>
+</li>
+<li><p>技术架构</p>
+<p><img src="https://tva1.sinaimg.cn/large/0081Kckwly1glqwf5tvdoj31bw0nejvr.jpg" alt="架构图"></p>
+</li>
+</ol>
+<p>   HarmonyOS整体遵从分层设计，从下向上依次为：内核层、系统服务层、框架层和应用层。系统功能按照“系统 &gt; 子系统 &gt; 功能/模块”逐级展开，在多设备部署场景下，支持根据实际需求裁剪某些非必要的子系统或功能/模块。</p>
+<ul>
+<li><p>内核层</p>
+<ul>
+<li>内核子系统：HarmonyOS采用多内核设计，支持针对不同资源受限设备选用适合的OS内核。内核抽象层（KAL，Kernel Abstract Layer）通过屏蔽多内核差异，对上层提供基础的内核能力，包括进程/线程管理、内存管理、文件系统、网络管理和外设管理等。</li>
+<li>驱动子系统：<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/glossary-0000000000029587#ZH-CN_TOPIC_0000001050749051__li1544183516475">硬件驱动框架（HDF）</a>是HarmonyOS硬件生态开放的基础，提供统一外设访问能力和驱动开发、管理框架。</li>
+</ul>
+</li>
+<li><p>系统服务层</p>
+<p>系统服务层是HarmonyOS的核心能力集合，通过框架层对应用程序提供服务。该层包含以下几个部分：</p>
+<ul>
+<li>系统基本能力子系统集：为分布式应用在HarmonyOS多设备上的运行、调度、迁移等操作提供了基础能力，由分布式软总线、分布式数据管理、分布式任务调度、方舟多语言运行时、公共基础库、多模输入、图形、安全、AI等子系统组成。其中，方舟运行时提供了C/C++/JS多语言运行时和基础的系统类库，也为使用方舟编译器静态化的Java程序（即应用程序或框架层中使用Java语言开发的部分）提供运行时。</li>
+<li>基础软件服务子系统集：为HarmonyOS提供公共的、通用的软件服务，由事件通知、电话、多媒体、DFX（Design For X） 、<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/glossary-0000000000029587#ZH-CN_TOPIC_0000001050749051__li1113671654618">MSDP</a>&amp;<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/glossary-0000000000029587#ZH-CN_TOPIC_0000001050749051__li13399361415">DV</a>等子系统组成。</li>
+<li>增强软件服务子系统集：为HarmonyOS提供针对不同设备的、差异化的能力增强型软件服务，由智慧屏专有业务、穿戴专有业务、IoT专有业务等子系统组成。</li>
+<li>硬件服务子系统集：为HarmonyOS提供硬件服务，由位置服务、生物特征识别、穿戴专有硬件服务、IoT专有硬件服务等子系统组成。</li>
+</ul>
+<p>根据不同设备形态的部署环境，基础软件服务子系统集、增强软件服务子系统集、硬件服务子系统集内部可以按子系统粒度裁剪，每个子系统内部又可以按功能粒度裁剪。</p>
+</li>
+<li><p>框架层</p>
+<p>框架层为HarmonyOS应用开发提供了Java/C/C++/JS等多语言的用户程序框架和<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/glossary-0000000000029587#ZH-CN_TOPIC_0000001050749051__li1373094219463">Ability</a>框架，两种UI框架（包括适用于Java语言的Java UI框架、适用于JS语言的JS UI框架），以及各种软硬件服务对外开放的多语言框架API。根据系统的组件化裁剪程度，HarmonyOS设备支持的API也会有所不同。</p>
+</li>
+<li><p>应用层</p>
+<p>应用层包括系统应用和第三方非系统应用。HarmonyOS的应用由一个或多个<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/glossary-0000000000029587#ZH-CN_TOPIC_0000001050749051__li102311923104712">FA（Feature Ability）</a>或<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/glossary-0000000000029587#ZH-CN_TOPIC_0000001050749051__li11872193812460">PA（Particle Ability）</a>组成。其中，FA有UI界面，提供与用户交互的能力；而PA无UI界面，提供后台运行任务的能力以及统一的数据访问抽象。基于FA/PA开发的应用，能够实现特定的业务功能，支持跨设备调度与分发，为用户提供一致、高效的应用体验。</p>
+</li>
+</ul>
+<h4 id="开发工具DevEco-Studio介绍及下载"><a href="#开发工具DevEco-Studio介绍及下载" class="headerlink" title="开发工具DevEco Studio介绍及下载"></a>开发工具DevEco Studio介绍及下载</h4><ol>
+<li>我们第一步首先祭出大招：<a href="https://developer.harmonyos.com/cn/develop/deveco-studio">DevEco Studio下载链接</a></li>
+</ol>
+<p>​       在下载之前我们需要去登录或者注册，成为华为HarmonOS的开发人员，这里大家自行去操作，不做过多赘述了。</p>
+<ol start="2">
+<li><p>DevEco Studio工具简介</p>
+<p>​      DevEco Studio是基于IntelliJ IDEA的开源版本打造，面向华为终端全场景多设备的一站式集成开发环境。作为一款IDE，除了基本的代码开发，编辑构建及调测等功能外，它还具有以下的特点：</p>
+</li>
+</ol>
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/0000000000011111111.20201217104802.60693486441401230067618137357836.png" alt="功能图" style="zoom:50%;" />
+
+<ul>
+<li><strong>多设备统一开发环境</strong> ：支持多种HarmonyOS设备的应用开发，包括手机，平板，车技，智慧屏，智能穿戴和智慧视觉等设备。</li>
+<li><strong>支持多语言的代码开发和调试</strong> ：包括Java、XML、C/C++。JS、CSS和HML（HarmonyOS Markup Language）</li>
+<li><strong>支持FA/PA快速开发</strong> ：通过工程向导可快速创建FA/PA工程模板，一键式打包成HAP（HarmonyOS Ability Package）。</li>
+<li><strong>支持分布式多端应用开发</strong> ：一个工程和一份代码可跨设备运行，支持不同设备界面的实时预览和差异化开发，实现代码的最大化重用。</li>
+<li><strong>支持多设备模拟器</strong> ：提供多设备的模拟器资源，包括手机，平板，车技，智慧屏，只能穿戴设备的模拟器，方便开发者高效调试。</li>
+<li><strong>支持多设备预警器</strong> ：提供JS和Java预览器功能，可以实时查看应用的布局效果，支持实时预览和动态预览；同时还支持多设备同时预览，查看同一个布局文件在不同设备上的呈现效果。</li>
+</ul>
+<h4 id="配置开发环境"><a href="#配置开发环境" class="headerlink" title="配置开发环境"></a>配置开发环境</h4><p>​    我们在安装studio的时候，请一路猛按Next按钮，不要犹豫，因为就是这个流程——简单暴力！</p>
+<p>​    配置好之后如图：</p>
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG1.png" alt="studio界面" style="zoom:50%;" />
+
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG2.png" alt="选择设备" style="zoom:50%;" />
+
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG3.png" alt="创建工程" style="zoom:50%;" />
+
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG4.png" alt="工程目录" style="zoom:50%;" />
+
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG8.png" alt="下载模拟器" style="zoom:50%;" />
+
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG9.png" alt="运行模拟器" style="zoom:50%;" />
+
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG10.png" alt="运行" style="zoom:50%;" />
+
+<img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/WechatIMG12.png" alt="运行成功" style="zoom:50%;" />
+
+<h4 id="工程目录介绍"><a href="#工程目录介绍" class="headerlink" title="工程目录介绍"></a>工程目录介绍</h4><p>​    我们先来看下工程目录的结构图：</p>
+<p>​    <img src="https://tva1.sinaimg.cn/large/0081Kckwly1glquqhwmbcj30dc0fzaag.jpg" alt="目录结构"></p>
+<p>​    </p>
+<ul>
+<li><p><strong>.gradle</strong>：Gradle配置文件，由系统自动生成，一般情况不需要进行修改</p>
+</li>
+<li><p><strong>entry</strong>：默认启动模块，开发者用于编写代码及开发资源文件的目录</p>
+<ul>
+<li><p>entry&gt;libs：用于存放entry模块的依赖文件</p>
+</li>
+<li><p>entry&gt;src&gt;main&gt;java：用于存放java代码</p>
+</li>
+<li><p>entry&gt;src&gt;main&gt;resources：用于存放应用用到的资源文件，如图片，多媒体，字符串，布局文件等</p>
+<p>关于资源文件的详细说明请参考**<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/basic-resource-file-categories-0000001052066099">资源文件的分类</a>。**</p>
+</li>
+</ul>
+</li>
+<li><p><strong>entry&gt;src&gt;main&gt;config.json</strong>：HAP清单文件，详细说明请参考**<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/basic-config-file-elements-0000000000034463">config.json配置文件介绍</a>。**</p>
+</li>
+<li><p><strong>entry&gt;src&gt;test</strong>：编写代码单元测试代码的目录，运行在本地Java虚拟机（JVM）上。</p>
+</li>
+<li><p><strong>entry&gt;.gitignore</strong>：标识git版本管理需要忽略的文件。</p>
+</li>
+<li><p><strong>entry&gt;build.gradle</strong>：entry模块的编译配置文件。</p>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>我们通过文章已经可以运行程序了，华为的鸿蒙系统开发IDE对于java和Android开发者来说应该是再熟悉不过的界面了，相信大家都可以很快上手；工程目录有细微的变化，不过通俗易懂。下篇文章我们开始进入正题，来介绍鸿蒙的开发流程。</p>
+]]></content>
+      <categories>
+        <category>鸿蒙-HarmonyOS</category>
+      </categories>
+      <tags>
+        <tag>HarmonyOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android架构组件（四）：Room</title>
+    <url>/2019/10/25/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9ARoom/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>上篇我们分析了对于Android架构体系最终要的Viewmodel组件，它可以实现数据和view之间的管理，并且能提供组件间的通讯（注意fragment获取viewmodel时传入的对象要一致）。<br>那么，接下来我们就学习一下和Livedata完美兼容的数据库——<strong>Room</strong></p>
+<p><strong>Room</strong>是Google推出的Android架构组件库中的<strong>数据持久化组件库</strong>, 也可以说是在SQLite上实现的一套ORM解决方案。<br><strong>Room</strong>数据存储库<strong>支持返回Livedata对象</strong>的可观察查询，当数据库更新时，Room 会生成更新 LiveData 对象所需的所有代码。在需要时，生成的代码会在后台线程上异步运行查询。此模式有助于使界面中显示的数据与存储在数据库中的数据保持同步。</p>
+<h4 id="Room是什么？"><a href="#Room是什么？" class="headerlink" title="Room是什么？"></a>Room是什么？</h4><p>Room主要包含四个步骤：</p>
+<ul>
+<li><p><strong>Entity</strong>：表示持有数据库行的类（即数据表结构）。对于每个实体，将会创建一个数据库表来持有他们。你必须通过Database类的entities数组来引用实体类。实体类的中的每个字段除了添加有 <strong>@Ignore注解</strong>外的，都会存放到数据库中。</p>
+</li>
+<li><p><strong>Dao</strong>：表示作为数据访问对象（DAO）的类或接口。DAO是Room的主要组件，负责定义访问数据库的方法。由 <strong>@Database注解</strong>标注的类必须包含一个无参数且返回使用 <strong>@Dao注解</strong>的类的抽象方法。当在编译生成代码时，Room创建该类的实现。</p>
+</li>
+<li><p><strong>Database</strong> ：用来创建一个数据库持有者。注解定义一系列实体，类的内容定义一系列DAO。它也是底层连接的主入口点。</p>
+</li>
+<li><p><strong>Room</strong> ：数据库的创建者 &amp; 负责数据库版本更新的具体实现者</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<p>其关系图如下所示：<br><img src="https://power-blog-resources.oss-cn-beijing.aliyuncs.com/pic/room%E5%85%B3%E7%B3%BB%E5%9B%BE.png" alt="Room关系图"></p>
+<h4 id="Room的基本使用"><a href="#Room的基本使用" class="headerlink" title="Room的基本使用"></a>Room的基本使用</h4><h5 id="1-创建Entity实体（Entity）"><a href="#1-创建Entity实体（Entity）" class="headerlink" title="1. 创建Entity实体（Entity）"></a><strong>1. 创建Entity实体（Entity）</strong></h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 主键-设置自增长 默认false</span></span><br><span class="line">    <span class="meta">@PrimaryKey(autoGenerate = true)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> uid;</span><br><span class="line">    <span class="comment">// 数据表中的名字 默认字段名</span></span><br><span class="line">    <span class="meta">@ColumnInfo(name = &quot;name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="comment">//注解该字段不加入数据表中</span></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">    <span class="comment">//引用其它实体类</span></span><br><span class="line">    <span class="meta">@Embedded</span></span><br><span class="line">    <span class="keyword">private</span> Education mEducation;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ...省略getter and setter</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Education</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String HighSchool;</span><br><span class="line">        <span class="keyword">private</span> String University；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们先来介绍下实体类中的注解及其含义：</p>
+<ul>
+<li><code>@Entity</code> ：数据表的实体类</li>
+<li><code>@PrimaryKey</code> ：每一个实体类都需要一个唯一的标识即主键。</li>
+<li><code>@ColumnInfo</code> ：数据表中字段的名字</li>
+<li><code>@Ignore</code> ：标注不需要加入数据表中的属性</li>
+<li><code>@Embedded</code> ：实体类中引用其它实体类</li>
+<li><code>@ForeignKey</code> ：外键约束</li>
+</ul>
+<p><strong>1.1 @Entity——实体类</strong></p>
+<p><strong>1.1.1 指定表名</strong><br>用@Entity标注的类，<strong>默认表示当前的类名即为表名</strong>，当然我们也可以指定表名：<br><code>@Entity(tableName = &quot;other&quot;)</code><br><strong>1.1.2 设置主键或复合主键</strong><br>我们也可以在@Entity中设置主键、复合主键：<br>这里注意：<br><strong><em>主键的字段不能为null，也不允许有重复值</em></strong><br><strong><em>复合主键的字段不能为null，所以需要加上@Nullable注解</em></strong><br><strong><em>复合主键只有主键都一致，才会覆盖，相当于&amp;&amp;</em></strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity(primaryKeys = &quot;uid&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(primaryKeys = &#123;&quot;uid&quot;, &quot;name&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Nullable</span> <span class="comment">//复合主键时需注意，不能为null</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>1.1.3 设置索引</strong><br>数据库添加索引，可以提高数据库访问速度。<br>索引可以有<strong>单列索引，组合索引及索引的唯一性</strong><br><strong>索引的唯一性unique = true，表示数据不可重复，但在组合索引中不作为条件依据</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//单列索引          @Entity(indices = &#123;@Index(value = &quot;name&quot;)&#125;)</span></span><br><span class="line"><span class="comment">//单列索引唯一性      @Entity(indices = &#123;@Index(value = &quot;name&quot;, unique = true)&#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//组合索引           @Entity(indices =&#123;@Index(value = &#123;&quot;name&quot;,&quot;age&quot;&#125;)&#125;)</span></span><br><span class="line"><span class="comment">//组合索引唯一性      @Entity(indices =&#123;@Index(value = &#123;&quot;name&quot;,&quot;age&quot;&#125;,unique = true)&#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//当然可以混起来用 如下：</span></span><br><span class="line"><span class="meta">@Entity(indices =&#123;@Index(value = &quot;name&quot;),@Index(value = &#123;&quot;name&quot;,&quot;age&quot;&#125;,unique = true)&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>1.1.4 外键约束</strong><br>我们再创建一个实体类Book</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity(foreignKeys = @ForeignKey(entity = User.class,parentColumns = &quot;uid&quot;,childColumns = &quot;fatherId&quot;))</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> bookId;</span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> fatherId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看下这段注解的含义：<br>它表示Book实体类<strong>依附</strong>于User实体类<code>entity = User.class</code><br>并且注明父类User的列uid字段<code>parentColumns = &quot;uid&quot;</code><br>子类Book的列fatherId字段<code>childColumns = &quot;fatherId&quot;</code><br>表明了<strong>子类的fatherId相当于父类uid（fatherId == uid）</strong><br><code>@ForeignKey</code>还有两个属性<code>onDelete</code>和<code>onUpdate</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity(foreignKeys = @ForeignKey(onDelete = CASCADE,onUpdate = CASCADE,entity = User.class,parentColumns = &quot;uid&quot;,childColumns = &quot;fatherId&quot;))</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>这里属性值有以下几种：</p>
+<ul>
+<li><strong>NO_ACTION</strong>：当User中的uid有变化的时候Book中的father_id不做任何动作</li>
+<li><strong>RESTRICT</strong>：当User中的uid在Book里有依赖的时候禁止对User做动作，做动作就会报错。</li>
+<li><strong>SET_NULL</strong>：当User中的uid有变化的时候Book的fatherId会设置为NULL。</li>
+<li><strong>SET_DEFAULT</strong>：当User中的uid有变化的时候Book的fatherId会设置为默认值，我这里是int型，那么会设置为0</li>
+<li><strong>CASCADE</strong>：当User中的uid有变化的时候Book的fatherId跟着变化，假如我把uid = 1的数据删除，那么Book表里，fatherId = 1的都会被删除。</li>
+</ul>
+<p><strong>1.2 @PrimaryKey——主键</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="comment">//我们可以直接在字段上设置uid为主键</span></span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> uid;</span><br><span class="line">    <span class="comment">//想要自增长那么这样</span></span><br><span class="line">    <span class="meta">@PrimaryKey(autoGenerate = true)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> uid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>1.3 @ColumnInfo——表中字段名</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="comment">//默认实体类字段名为表中字段名</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> uid;</span><br><span class="line">    <span class="comment">//指定后表里的key就是uid_</span></span><br><span class="line">    <span class="meta">@ColumnInfo(name = &quot;uid_&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> uid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>1.4 @Ignore——忽略字段，不添加进表中</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="comment">//注解标记后 sex字段不会添加进数据表中</span></span><br><span class="line">    <span class="meta">@Ingore</span></span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>1.5 @Embedded——引用其它实体类</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="meta">@Embedded</span></span><br><span class="line">    <span class="keyword">private</span> Book book;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假如实体类中包含了多个同一类型的嵌入字段（比如一个人User拥有两本Book），我们可以通过设置<code>prefix</code>属性来保持每列的唯一性。<code>Room</code>会将提供的值添加到嵌入对象的每个列名的开头。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//@Embedded(prefix = &quot;one&quot;),这个是区分唯一性的，</span></span><br><span class="line"><span class="comment">//比如说一这个人有2本书并添加了tag，那么在数据表中就会以prefix+属性值命名</span></span><br><span class="line"><span class="meta">@Embedded(prefix = &quot;one&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Book address;</span><br><span class="line"><span class="meta">@Embedded(prefix = &quot;two&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Book address;</span><br></pre></td></tr></table></figure>
+<h5 id="2-创建数据访问对象（DAO）"><a href="#2-创建数据访问对象（DAO）" class="headerlink" title="2. 创建数据访问对象（DAO）"></a><strong>2. 创建数据访问对象（DAO）</strong></h5><p><strong>Dao</strong>以简洁的方式抽象了我们对数据库的访问。<br><strong>Dao</strong>可以定义为接口或者抽象类。如果它是抽象类，它可以有一个<code>RoomDatabase</code>作为唯一参数的构造函数。</p>
+<blockquote>
+<p><strong>注意：</strong><code>Room</code>不允许在主线程中访问数据库，除非你可以builder上调用<code>allowMainThreadQueries()</code>，因为它可能会长时间锁住UI。<br>异步查询（返回<code>LiveData</code>或<code>RxJava Flowable</code>的查询）则不受此影响，因为它们可以异步运行在后台线程上。</p>
+</blockquote>
+<p><strong>Dao</strong>的相关注解很简单，我们来看一下：</p>
+<ul>
+<li><code>@Dao</code> ： 标注数据库操作的类。</li>
+<li><code>@Query</code> ： 包含所有Sqlite语句操作。</li>
+<li><code>@Insert</code> ： 标注数据库的插入操作。</li>
+<li><code>@Delete</code> ： 标注数据库的删除操作。</li>
+<li><code>@Update</code> ： 标注数据库的更新操作。<blockquote>
+<p>这里不用过多叙述了，除了一个标注操作类的<code>@Dao</code>，其余就是增删改查了。</p>
+</blockquote>
+</li>
+</ul>
+<p>我们直接上代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> </span>&#123;</span><br><span class="line">    <span class="comment">//查询所有数据</span></span><br><span class="line">    <span class="meta">@Query(&quot;Select * from user&quot;)</span></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">getAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除全部数据</span></span><br><span class="line">    <span class="meta">@Query(&quot;DELETE FROM user&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//一次插入单条数据 或 多条</span></span><br><span class="line">    <span class="comment">//@Insert(onConflict = OnConflictStrategy.REPLACE),这个是干嘛的呢，下面有详细教程</span></span><br><span class="line">    <span class="meta">@Insert</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(User... users)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//一次删除单条数据 或 多条</span></span><br><span class="line">    <span class="meta">@Delete</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(User... users)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//一次更新单条数据 或 多条</span></span><br><span class="line">    <span class="meta">@Update</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(User... users)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据字段去查找数据</span></span><br><span class="line">    <span class="meta">@Query(&quot;SELECT * FROM user WHERE uid= :uid&quot;)</span></span><br><span class="line">    <span class="function">Person <span class="title">getUserByUid</span><span class="params">(<span class="keyword">int</span> uid)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//一次查找多个数据</span></span><br><span class="line">    <span class="meta">@Query(&quot;SELECT * FROM user WHERE uid IN (:userIds)&quot;)</span></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">loadAllByIds</span><span class="params">(List&lt;Integer&gt; userIds)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//多个条件查找</span></span><br><span class="line">    <span class="meta">@Query(&quot;SELECT * FROM user WHERE name = :name AND age = :age&quot;)</span></span><br><span class="line">    <span class="function">Person <span class="title">getUserByNameage</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里唯一特殊的就是<code>@Insert</code>。其有一段介绍：对数据库设计时，不允许重复数据的出现。否则，必然造成大量的冗余数据。实际上，难免会碰到这个问题：冲突。当我们像数据库插入数据时，该数据已经存在了，必然造成了冲突。该冲突该怎么处理呢？在<code>@Insert</code>注解中有<code>conflict</code>用于解决插入数据冲突的问题，其默认值为<code>OnConflictStrategy.ABORT</code>。对于<code>OnConflictStrategy</code>而言，它封装了Room解决冲突的相关策略。</p>
+<ul>
+<li><code>OnConflictStrategy.REPLACE</code>：冲突策略是取代旧数据同时继续事务</li>
+<li><code>OnConflictStrategy.ROLLBACK</code>：冲突策略是回滚事务</li>
+<li><code>OnConflictStrategy.ABORT</code>：冲突策略是终止事务</li>
+<li><code>OnConflictStrategy.FAIL</code>：冲突策略是事务失败</li>
+<li><code>OnConflictStrategy.IGNORE</code>：冲突策略是忽略冲突</li>
+</ul>
+<p>这里比如在插入的时候我们加上了<code>OnConflictStrategy.REPLACE</code>，那么往已经有uid=1的person表里再插入uid =1的person数据，那么<strong>新数据会覆盖旧数据</strong>。如果我们什么都不加，那么久是默认的OnConflictStrategy.ABORT，重复上面的动作，你会发现，<strong>程序崩溃</strong>了。也就是上面说的终止事务。</p>
+<h5 id="3-数据库持有者（Database）"><a href="#3-数据库持有者（Database）" class="headerlink" title="3. 数据库持有者（Database）"></a><strong>3. 数据库持有者（Database）</strong></h5><p>我们下来看下代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注解指定了database的表映射实体数据以及版本等信息(后面会详细讲解版本升级)</span></span><br><span class="line"><span class="meta">@Database(entities = &#123;User.class, Book.class&#125;, version = 1)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDataBase</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserDao <span class="title">getUserDao</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> BookDao <span class="title">getBookDao</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果后期我们需要往已建的数据表中加入新的字段，或者增加新的索引，这时候就需要我们<br><strong><em>对数据库版本进行升级</em></strong>。<br>在<code>Room</code>中，我们需要在<code>Database</code>中修改版本信息，并添加<code>Migration</code>类，告诉<code>Room</code>是哪张表？改了什么内容？</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//修改version = 2</span></span><br><span class="line"><span class="meta">@Database(entities = &#123;User.class, Book.class&#125;, version = 2)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDataBase</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserDao <span class="title">getUserDao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> BookDao <span class="title">getBookDao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//数据库变动添加Migration，简白的而说就是版本1到版本2改了什么东西</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Migration MIGRATION_1_2 = <span class="keyword">new</span> Migration(<span class="number">1</span>, <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">migrate</span><span class="params">(SupportSQLiteDatabase database)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//告诉user表，增添一个String类型的字段 job</span></span><br><span class="line">            database.execSQL(<span class="string">&quot;ALTER TABLE user ADD COLUMN job TEXT&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//我们添加完了migration后，根据Room.builder把我们版本更新的信息add进去</span></span><br><span class="line"><span class="comment">//我们稍后会讲到</span></span><br><span class="line">Room.databaseBuilder(...)</span><br><span class="line">    <span class="comment">//加上版本升级信息</span></span><br><span class="line">    .addMigrations(AppDataBase.MIGRATION_1_2)</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<h5 id="4-数据库的创建者（Room）"><a href="#4-数据库的创建者（Room）" class="headerlink" title="4. 数据库的创建者（Room）"></a><strong>4. 数据库的创建者（Room）</strong></h5><p><code>Room</code>是数据库的创建者，在创建Database实例的时候，我们需要遵循单例模式，避免操作时创建多个Database实例，所以我们把它封装成单例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DBInstance</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DB_NAME = <span class="string">&quot;room_test&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> AppDataBase appDataBase;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppDataBase <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(appDataBase==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (DBInstance.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(appDataBase==<span class="keyword">null</span>)&#123;</span><br><span class="line">                    appDataBase = Room.databaseBuilder(App.getContext(), AppDataBase.class, DB_NAME)</span><br><span class="line">                        <span class="comment">//下面注释表示允许主线程进行数据库操作，但是不推荐这样做。</span></span><br><span class="line">                        <span class="comment">//我这里是为了Demo展示，稍后会介绍和LiveData、RxJava的使用</span></span><br><span class="line">                        .allowMainThreadQueries()</span><br><span class="line">                        .build();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> appDataBase;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-举个完整栗子"><a href="#5-举个完整栗子" class="headerlink" title="5. 举个完整栗子~"></a><strong>5. 举个完整栗子~</strong></h5><p>上面我们四个部分已经分析完毕了，我们接下来举一个完整栗子来贯穿一下<code>Room</code>的用法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1.首先我们创建实体类 Entity</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.创建数据访问对象 UserDao ——提供增删改查接口</span></span><br><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> </span>&#123;</span><br><span class="line">    <span class="comment">//查询所有数据</span></span><br><span class="line">    <span class="meta">@Query(&quot;Select * from user&quot;)</span></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">getAll</span><span class="params">()</span></span>;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//多个条件查找</span></span><br><span class="line">    <span class="meta">@Query(&quot;SELECT * FROM user WHERE name = :name AND age = :age&quot;)</span></span><br><span class="line">    <span class="function">Person <span class="title">getUserByNameage</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.创建数据库持有者 Database</span></span><br><span class="line"><span class="meta">@Database(entities = &#123;User.class, Book.class&#125;, version = 2)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDataBase</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserDao <span class="title">getUserDao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> BookDao <span class="title">getBookDao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//数据库变动添加Migration，简白的而说就是版本1到版本2改了什么东西</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Migration MIGRATION_1_2 = <span class="keyword">new</span> Migration(<span class="number">1</span>, <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">migrate</span><span class="params">(SupportSQLiteDatabase database)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//告诉user表，增添一个String类型的字段 job</span></span><br><span class="line">            database.execSQL(<span class="string">&quot;ALTER TABLE user ADD COLUMN job TEXT&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//4. 实例化并操作数据库</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (v.getId()) &#123;</span><br><span class="line">            <span class="keyword">case</span> R.id.btn_insert:</span><br><span class="line">                User user = <span class="keyword">new</span> User(<span class="string">&quot;Room&quot;</span>, <span class="number">18</span>);</span><br><span class="line">                DBInstance.getInstance().getUserDao().insert(user);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Room结合LiveData使用"><a href="#Room结合LiveData使用" class="headerlink" title="Room结合LiveData使用"></a>Room结合LiveData使用</h4><p>上文之中我们在单例模式中提到了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Room.databaseBuilder(...)</span><br><span class="line">    <span class="comment">//允许在主线程中查询</span></span><br><span class="line">    .allowMainThreadQueries()</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<p>如果数据库中数据庞大，会导致阻塞UI，进而带来不好的用户体验，那么我们选择用<code>Livedata</code>就可以解决这一问题。<br>我们以上一篇Viewmodel中的栗子来说（省略以上Room四个步骤）：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="comment">//如果不熟悉Livedata用法可以阅读我关于Livedata的博客</span></span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;List&lt;User&gt;&gt; users;</span><br><span class="line">    <span class="keyword">public</span> LiveData&lt;List&lt;User&gt;&gt; getUsers() &#123;</span><br><span class="line">        <span class="keyword">if</span> (users == <span class="keyword">null</span>) &#123;</span><br><span class="line">            users = <span class="keyword">new</span> MutableLiveData&lt;List&lt;Users&gt;&gt;();</span><br><span class="line">            loadUsers();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> users;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 异步调用获取用户列表</span></span><br><span class="line">        ...</span><br><span class="line">        users.setValue(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        MyViewModel model = ViewModelProviders.of(<span class="keyword">this</span>).get(MyViewModel.class);</span><br><span class="line">        model.getUsers().observe(<span class="keyword">this</span>, users -&gt; &#123;</span><br><span class="line">            <span class="comment">//存进数据库</span></span><br><span class="line">            DBInstance.getInstance().getUserDao().insert(users);</span><br><span class="line">            <span class="comment">//数据库中查询所有</span></span><br><span class="line">            query();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//getAll()返回Livedata对象</span></span><br><span class="line">        DBInstance.getInstance().getUserDao().getAll()</span><br><span class="line">            .observe(<span class="keyword">this</span>, <span class="keyword">new</span> Observer&lt;List&lt;User&gt;&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">(List&lt;User&gt; users)</span> </span>&#123;</span><br><span class="line">                        <span class="comment">//查询到所有user用户</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="参考-amp-感谢"><a href="#参考-amp-感谢" class="headerlink" title="参考&amp;感谢"></a>参考&amp;感谢</h4><p><a href="https://juejin.im/post/5d9fdacaf265da5bb86ac12c#heading-18">Android从零开始搭建MVVM架构（4）————Room（从入门到进阶）</a></p>
+<p><a href="https://www.wanandroid.com/">玩Android</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>以上就是我们最新学习的系统架构组件之一的——<code>Room</code>，相信我们通过文章的四部过程，完美诠释了数据库从创建，操作，版本更新，及配合<code>Livedata</code>的使用步骤，我也相信各位小伙伴已经掌握了它的大部分使用原理，当然了<code>Room</code>还有更多的细节等待着我们去探索。<br>至此，我的<strong>Android架构组件系列</strong>主体部分均已讲解完毕了，或许有人会问到为什么没有和<strong>MVVM</strong>架构完美匹配的<code>Databinding</code>的讲解呢?<br>其实，关于<code>Databinding</code>我也已经学习及了解过了，它可以将数据和<code>xml</code>进行绑定，当数据发生变化时会自动更新UI，这确实帮助我们有效的减少了<code>view</code>组件中不少的亢余代码，然而也带了一些缺点，比如复杂页面<code>xml</code>会很沉重，以及代码阅读性、单元测试及定位bug起到了负面作用。<br>所以我这次决定搭建的MVVM框架剔除了对<code>databinding</code>的依赖。那么下来我们就开始搭建<strong>MVVM</strong>之旅吧~</p>
+<h4 id="Android架构组件系列文章"><a href="#Android架构组件系列文章" class="headerlink" title="Android架构组件系列文章"></a>Android架构组件系列文章</h4><p><a href="https://powerofandroid.com/">我的博客（Power）</a><br><a href="https://www.jianshu.com/p/6a6086ee1c07">Android架构组件（一）：Lifecycle</a><br><a href="https://www.jianshu.com/p/c13e240c9989">Android架构组件（二）：LiveData</a><br><a href="https://www.jianshu.com/p/be3f7b4b9974">Android架构组件（三）：Viewmodel</a><br><a href="https://www.jianshu.com/p/cf05150335df">Android架构组件（四）：Room</a></p>
+<p><strong>感谢您的阅读和支持！</strong></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>android架构组件</tag>
+      </tags>
+  </entry>
+</search>
